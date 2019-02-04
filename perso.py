@@ -2,47 +2,76 @@ import sys, pygame
 from pygame.locals import *
 pygame.init()
 
-class Personnage:
-    def __init__(self, image, width, height, speed):
-        self.speed = speed
+class Personnage(pygame.sprite.Sprite):
+    def __init__(self, image):
         self.image = image
-        self.pos = image.get_rect().move(width, height)
-    def moveLeft(self):
-        self.pos = self.pos.move(-(self.speed), 0)
-    def moveRight(self):
-        self.pos = self.pos.move((self.speed), 0)
-    def moveUp(self):
-        self.pos = self.pos.move(0, -(self.speed))
-    def moveDown(self):
-        self.pos = self.pos.move(0, (self.speed))
+        self.pos = pygame.Rect(200, 300, 110, 110)
+        self.v_x = 1.5
+        self.v_saut = -4
+        self.v_gravitation = 0.08
+        self.v_y = self.v_saut
+        
+    def deplacement(self):
+        if event.type == KEYDOWN:
+            g = 0
+            if k[K_UP]:
+                self.pos.y += self.v_y
+                self.v_y += self.v_gravitation
+
+                if self.v_y > 5:
+                    self.v_y = self.v_saut
+
+            if k[K_RIGHT]:
+                self.pos.x += 5
+
+                if k[K_RIGHT] and k[K_UP]:
+                    self.pos.x += self.v_x
+                    self.pos.y += self.v_y
+                    self.v_y += self.v_gravitation
+                     
+                    if self.v_y > 5:
+                        self.v_y = self.v_saut
+
+            if k[K_LEFT]:
+                self.pos.x -= 5
+                   
+                if k[K_LEFT] and k[K_UP]:
+                    self.pos.x -= self.v_x
+                    self.pos.y += self.v_y
+                    self.v_y += self.v_gravitation
+
+                     
+                    if self.v_y > 5:
+                        self.v_y = self.v_saut
+                   
+            if k[K_DOWN]:
+                self.pos.y += 5
+
+                
+        elif event.type == KEYUP:
+               
+            if k[K_UP]:
+                self.v_y = self.v_saut
 
 screen = pygame.display.set_mode((600, 600))
 
-fond = pygame.image.load('brick-wall.jpg')
-screen.blit(fond, (0,0))
-
+fond = pygame.image.load('brick-wall.png')
 perso = pygame.image.load('perso.png')
+o = Personnage(perso)
 
-pos_pers = perso.get_rect()
+screen.blit(fond, (0,0))
+screen.blit(o.image, o.pos)
 
 pygame.display.flip()
 
-o = Personnage(perso,0,0,3)
-
-pygame.key.set_repeat(400, 30)
+pygame.key.set_repeat(10, 10)
 while 1:
-    screen.blit(fond, o.pos, o.pos)
+    screen.blit(fond, (0,0))
+    k = pygame.key.get_pressed()
     for event in pygame.event.get():
-          if event.type == KEYDOWN:
-              if event.key == K_DOWN:
-                  o.moveDown()
-              if event.key == K_UP:
-                  o.moveUp()
-              if event.key == K_LEFT:
-                  o.moveLeft()
-              if event.key == K_RIGHT:
-                  o.moveRight()
-
+          o.deplacement()
+          
+    screen.blit(fond, (0,0))
     screen.blit(o.image, o.pos)
 
     pygame.display.flip()
