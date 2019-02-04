@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from sys import platform
 import os
 
 
@@ -31,7 +32,12 @@ def main():
     bcredit=pygame.draw.rect(fond, (200,200,200),(x2,y3,largB,hautB))
 
 
-    # Blitter le tout dans la fenêtre
+    # Test sur l'os
+    if platform == "linux" or platform == "linux2":
+        commande="python3"
+    elif platform == "win32":
+        commande="py"
+
 
     screen.blit(fond, (0, 0))
     pygame.display.update()
@@ -47,11 +53,17 @@ def main():
                     # `event.pos` is the mouse position.
                     if bjouer.collidepoint(event.pos):
                         print("vous avez clicker sur jouer")
+                        commande=commande+" vueChoixPerso.py"
+                        pygame.quit()
+                        os.system(commande)
+                        return
                     elif bregle.collidepoint(event.pos):
                         print("vous avez clicker sur Regles")
                     elif bcredit.collidepoint(event.pos):
                         print("vous avez clicker sur Credit")
-                        os.system("python3 vueCredits.py")
+                        commande=commande+" vueCredits.py"
+                        os.system(commande)
+                        commande="py"
 
 
         mouse = pygame.mouse.get_pos()
