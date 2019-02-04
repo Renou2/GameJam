@@ -11,5 +11,5 @@ class Tableau(pygame.sprite.Group):
         self.background = pygame.image.load(background)
         self.xdebut = xdebut
         self.ydebut = ydebut
-        self.yfin = yfin
         self.xfin = xfin
+        self.yfin = yfin
