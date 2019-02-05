@@ -27,15 +27,21 @@ def affichageTableau(tab):
 
 def verifSortie(perso, i, listetab):
 
-    if (perso.pos.right == listetab[i].xfin) or (perso.pos.bottom == listetab[i].yfin):
-        i+=1;
+    if (perso.pos.centerx >= listetab[i].xafin) and (perso.pos.centery >= listetab[i].yafin) and (perso.pos.centerx <= listetab[i].xbfin) and (perso.pos.centery <= listetab[i].ybfin):
+        print(i)
+        if i < len(listetab):
+            i+=1
+        else : i = 0
+
         perso.pos.left = listetab[i].xdebut
         perso.pos.bottom = listetab[i].ydebut
         affichageTableau(listetab[i])
 #--------------------------------------------------------
-tab1 = tableau.Tableau('abc.png',0,600,600,0 )
-tab2 = tableau.Tableau('brick-wall.jpg',0,200,600,600 )
-listetab =[tab1, tab2]
+
+tab1 = tableau.Tableau('abc.png',0,600,500,0,600,100 )
+tab2 = tableau.Tableau('brick-wall.jpg',0,200,500,500,600,600 )
+tab3 = tableau.Tableau('sky.jpg',0,200,500,500,600,600 )
+listetab =[tab1, tab2, tab3]
 i = 0;
 screen = pygame.display.set_mode((600, 600))
 affichageTableau(listetab[i])
@@ -44,7 +50,7 @@ pos_pers = perso.get_rect()
 
 
 
-o = Personnage(perso,tab1.xdebut,tab1.ydebut-250,5)
+o = Personnage(perso,tab1.xdebut,tab1.ydebut-250,10)
 
 pygame.key.set_repeat(400, 30)
 while 1:
