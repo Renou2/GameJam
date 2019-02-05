@@ -59,6 +59,9 @@ def main():
                         return
                     elif bregle.collidepoint(event.pos):
                         print("vous avez clicker sur Regles")
+                        commande=commande+" vueRegle.py"
+                        pygame.quit()
+                        os.system(commande)
                     elif bcredit.collidepoint(event.pos):
                         print("vous avez clicker sur Credit")
                         commande=commande+" vueCredits.py"
