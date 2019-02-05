@@ -12,16 +12,16 @@ screen.blit(fond, (0,0))
 
 #>Init perso
 person = pygame.image.load('perso.png')
-o = perso.Personnage(person,0,0,10)
+o = perso.Personnage(person,200,300,10)
 
 #Init Bloc
 imbloc = pygame.image.load('Rectangle_.png')
 b = Bloc(imbloc, 900, 900, 1, (-1,-1))
-b.rect.width=100
-b.rect.height=100
+b.rect.width=1
+b.rect.height=1
 
-o.rect.width=100
-o.rect.height=100
+o.rect.width=25
+o.rect.height=25
 
 #Init Groupe
 g = pygame.sprite.Group()
@@ -34,13 +34,24 @@ while 1:
         if event.type == KEYDOWN:
             if event.key == K_DOWN:
                 o.moveDown()
+                if  pygame.sprite.collide_rect(o,b) :
+                    b.vector = (0,0)
+                    o.moveUp()
             if event.key == K_UP:
                 o.moveUp()
+                if  pygame.sprite.collide_rect(o,b) :
+                    b.vector = (0,0)
+                    o.moveDown()
             if event.key == K_LEFT:
                 o.moveLeft()
+                if  pygame.sprite.collide_rect(o,b) :
+                    b.vector = (0,0)
+                    o.moveRight()
             if event.key == K_RIGHT:
                 o.moveRight()
-
+                if  pygame.sprite.collide_rect(o,b) :
+                    b.vector = (0,0)
+                    o.moveLeft()
             if event.key == K_ESCAPE :
                 pygame.display.quit()
                 pygame.quit()
@@ -48,12 +59,10 @@ while 1:
     g.draw(fond)
 
     #s = pygame.sprite.spritecollideany(o, g)
-    if  pygame.sprite.collide_rect(o,b) :
-        b.vector = (0,0)
 
     print(b.vector)
-    print(b.rect )
-    print(o.rect )
+    #print(b.rect )
+    #print(o.rect )
     screen.blit(b.image, b.pos)
     screen.blit(o.image, o.pos)
     #else : b.vector = (-1,-1)

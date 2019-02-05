@@ -16,7 +16,6 @@ class Bloc(pygame.sprite.Sprite):
         self.vector = vector
     def update(self):
         newpos = self.calcnewpos(self.pos,self.vector)
-        #self.pos = newpos
         self.pos = self.pos.move(self.vector)
         self.rect=self.pos
         (angle,z) = self.vector
