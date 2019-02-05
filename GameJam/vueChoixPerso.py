@@ -24,7 +24,7 @@ def main():
     pygame.display.set_caption('Nom du jeu')
 
 
-    fond = pygame.image.load('fond_regles.jpg').convert()
+    fond = pygame.image.load('fonds/fond_regles.jpg').convert()
     fond = pygame.transform.smoothscale(fond, (630, 300))
     fond = fond.convert_alpha()
 
@@ -48,10 +48,10 @@ def main():
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
 
-    skin = pygame.image.load('bonhomme.png')
+    skin = pygame.image.load('image/bonhomme.png')
     skin = pygame.transform.scale(skin, (150, 100))
 
-    skinf = pygame.image.load('bonhomme.png')
+    skinf = pygame.image.load('image/bonhomme.png')
     skinf = pygame.transform.scale(skin, (150, 100))
 
     if platform == "linux" or platform == "linux2":

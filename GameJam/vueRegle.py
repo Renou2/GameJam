@@ -13,7 +13,7 @@ x=(largeur_fenetre/2.4)
 y=(hauteur_fenetre/1.5)
 largBut=80
 hautBut=30
-fond = pygame.image.load(image).convert_alpha()
+fond = pygame.image.load('fonds/fond_regles.jpg').convert_alpha()
 frame.blit(fond, (0,0))
 pygame.display.flip()
 

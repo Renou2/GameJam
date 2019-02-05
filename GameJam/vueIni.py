@@ -24,7 +24,7 @@ def main():
 
     y3=220
 
-    fond = pygame.image.load('fond.png').convert()
+    fond = pygame.image.load('fonds/fond.png').convert()
     fond = pygame.transform.scale(fond, (400, 300))
     fond = fond.convert_alpha()
 

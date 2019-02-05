@@ -94,7 +94,7 @@ def main():
 
     #Panel de button
 
-    fond = pygame.image.load('serpentin.png').convert()
+    fond = pygame.image.load('fonds/serpentin.png').convert()
     fond = pygame.transform.scale(fond, (800, 600))
     fond = fond.convert_alpha()
 
@@ -126,10 +126,10 @@ def main():
     fondniv5 = pygame.image.load('fonds/fond_volcan.png').convert()
     fondniv5 = pygame.transform.scale(fondniv5, (largB,hautB))
 
-    skin = pygame.image.load('bonhomme.png')
+    skin = pygame.image.load('image/bonhomme.png')
     skin = pygame.transform.scale(skin, (100, 100))
 
-    rankG= pygame.image.load('medaille.png')
+    rankG= pygame.image.load('image/medaille.png')
     rankG = pygame.transform.scale(rankG, (60, 60))
 
 

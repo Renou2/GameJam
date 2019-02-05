@@ -14,11 +14,11 @@ y=200
 largBut=80
 hautBut=30
 
-background = "background_popup.jpg"
+background = "fonds/background_popup.jpg"
 fond = pygame.image.load(background).convert_alpha()
 frame.blit(fond, (0,0))
 
-image = "interrogation.png"
+image = "image/interrogation.png"
 icone = pygame.image.load(image).convert_alpha()
 icone = pygame.transform.scale(icone, (80,160))
 frame.blit(icone, (30,70))

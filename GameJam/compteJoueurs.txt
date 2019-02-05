@@ -96,3 +96,17 @@ Medailles:[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]
 Skin:bonhomme.png
 Score:0,0,0,0,0
 ScoreGeneral:0
+TOUTOU!
+Pieces:0
+PointsProg:0
+Medailles:[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]
+Skin:bonhomme.png
+Score:0,0,0,0,0
+ScoreGeneral:0
+Irak!
+Pieces:0
+PointsProg:0
+Medailles:[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]
+Skin:bonhomme.png
+Score:0,0,0,0,0
+ScoreGeneral:0
