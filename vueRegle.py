@@ -58,6 +58,7 @@ while continuer:
                         commande = commande+" vueIni.py"
                         pygame.quit()
                         os.system(commande)
+                        quit()
 
 
     mouse = pygame.mouse.get_pos()

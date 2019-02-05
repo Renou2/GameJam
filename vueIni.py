@@ -35,9 +35,10 @@ def main():
     # Test sur l'os
     if platform == "linux" or platform == "linux2":
         commande="python3"
+        savecommande="python3"
     elif platform == "win32":
         commande="py"
-
+        savecommande="py"
 
     screen.blit(fond, (0, 0))
     pygame.display.update()
@@ -56,7 +57,7 @@ def main():
                         commande=commande+" vueChoixPerso.py"
                         pygame.quit()
                         os.system(commande)
-                        return
+                        quit()
                     elif bregle.collidepoint(event.pos):
                         print("vous avez clicker sur Regles")
                         commande=commande+" vueRegle.py"
@@ -66,7 +67,7 @@ def main():
                         print("vous avez clicker sur Credit")
                         commande=commande+" vueCredits.py"
                         os.system(commande)
-                        commande="py"
+                        commande=savecommande
 
 
         mouse = pygame.mouse.get_pos()

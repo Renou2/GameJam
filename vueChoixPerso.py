@@ -47,7 +47,8 @@ def main():
 
     screen.blit(fond, (0, 0))
     pygame.display.update()
-
+    pygame.mixer.music.load("ladaronnealeo.mp3")
+    pygame.mixer.music.play()
     # Boucle d'évènements
     while 1:
         for event in pygame.event.get():
@@ -82,6 +83,8 @@ def main():
                         text += event.unicode
 
         txt_surface = arial.render(text, True, (10,10,10))
+        txt_b = arial.render("Entrer votre nom", True, (10,10,10))
+        fond.blit(txt_b, (input_box.x, input_box.y-20))
         fond.blit(txt_surface, (input_box.x+5, input_box.y+5))
 
         pygame.draw.rect(fond, color, input_box, 2)
