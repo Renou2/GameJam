@@ -11,7 +11,41 @@ from perso import *
 clock = pygame.time.Clock()
 
 
+def collision(rectA, rectB):
+    if rectB.right < rectA.left:
+        # rectB est à gauche
+        return False
+    if rectB.bottom < rectA.top:
+        # rectB est au-dessus
+        return False
+    if rectB.left > rectA.right:
+        # rectB est à droite
+        return False
+    if rectB.top > rectA.bottom:
+        # rectB est en-dessous
+        return False
+    # Dans tous les autres cas il y a collision
+    return True
 
+def gestioncollDroite(listes,o):
+    coll = False
+    for bloc in listes:
+        copyJ=o.rect.copy()
+        copyJ.x+=o.speed
+        if collision(copyJ,bloc.rect):
+            coll=True
+    if not coll :
+        o.pos.x+=o.speed
+
+def gestioncollGauche(listes,o):
+    coll = False
+    for bloc in listesprite:
+        copyJ=o.rect.copy()
+        copyJ.x-=o.speed
+        if collision(copyJ,bloc.rect):
+            coll=True
+    if not coll :
+        o.pos.x-=o.speed
 
 GRAVITE = 9.81
 
@@ -67,6 +101,17 @@ while 1:
                         o.pos.y=o.ya
                         o.t+=10
 
+                        coll = False
+                        for bloc in listesprite:
+                            copyJ=o.rect.copy()
+                            copyJ.y+=o.speed
+                            if collision(copyJ,bloc.rect):
+                                coll=True
+
+                        if coll == True:
+                            pastouchesol = False
+                            o.pos.y -= 8
+
                         k = pygame.key.get_pressed()
                         pygame.event.pump()
                         if(o.pos.y>700):
@@ -76,9 +121,9 @@ while 1:
                             pastouchesol=False
 
                         if(k[K_LEFT]):
-                                o.pos.x-=o.speed
+                                gestioncollGauche(listesprite,o)
                         elif(k[K_RIGHT]):
-                                o.pos.x+=o.speed
+                                gestioncollDroite(listesprite,o)
                         if o.pos.x > 1000:
                             o.pos.x = 0
 
@@ -120,16 +165,12 @@ while 1:
     k = pygame.key.get_pressed()
     if k[K_RIGHT]:
         if o.droite:
-            if  verifCollide(o, listesprite):
-                o.pos.x -= o.speed+20
-            else:
-                o.pos.x+=o.speed
+            gestioncollDroite(listesprite,o)
+
+
     elif k[K_LEFT]:
         if o.gauche:
-            if  verifCollide(o, listesprite):
-                o.pos.x += o.speed+20
-            else:
-                o.pos.x-=o.speed
+            gestioncollGauche(listesprite,o)
 
     if o.pos.x > 1000:
         o.pos.x = 0
