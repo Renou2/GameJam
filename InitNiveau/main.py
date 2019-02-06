@@ -47,9 +47,22 @@ def gestioncollGauche(listes,o):
     if not coll :
         o.pos.x-=o.speed
 
+def collisionbas(listes,o):
+    coll = False
+    for bloc in listesprite:
+        if o.rect.colliderect(bloc.rect):
+            if bloc.rect.top < o.rect.bottom: #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
+                print('COLL BAS')
+                coll=True
+
+        if coll:
+            o.pos.y-5
+    return coll
+
+
 GRAVITE = 9.81
 
-score = 0
+
 numtab = 0
 screen = pygame.display.set_mode((1000, 1000))
 
@@ -91,44 +104,38 @@ while 1:
                 if(o.peutsauter):
                     k = pygame.key.get_pressed()
                     pastouchesol=True
+                    sauvy=o.pos.y
                     while(pastouchesol):
+                        o.ya=sauvy
                         k = pygame.key.get_pressed()
-                        o.ya = 700
+                        old_x = o.pos.x
+                        old_y = o.pos.y
+
                         #//On calcule la valeur relative de y:
                         o.yr=(int)((v_y*o.t)-((GRAVITE*o.t*o.t)/2000))
                         #//On calcule maintenant les valeurs absolues
                         o.ya = o.ya - o.yr
                         o.pos.y=o.ya
+                        if(collisionbas(listesprite,o)):
+                            o.yr=0
+                            o.t=0
+                            o.pos.y=old_y
+                            pastouchesol=False
+
+                        #o.pos.y=o.ya
                         o.t+=10
-
-                        coll = False
-                        for bloc in listesprite:
-                            copyJ=o.rect.copy()
-                            copyJ.y+=o.speed
-                            if collision(copyJ,bloc.rect):
-                                coll=True
-
-                        if coll == True:
-                            pastouchesol = False
-                            o.pos.y -= 8
 
                         k = pygame.key.get_pressed()
                         pygame.event.pump()
-                        if(o.pos.y>700):
-                            o.yr=0
-                            o.ya = 700
-                            o.t=0
-                            pastouchesol=False
+
+                        if o.pos.x > 1000:
+                            o.pos.x = 0
+
 
                         if(k[K_LEFT]):
                                 gestioncollGauche(listesprite,o)
                         elif(k[K_RIGHT]):
                                 gestioncollDroite(listesprite,o)
-                        if o.pos.x > 1000:
-                            o.pos.x = 0
-
-
-
 
                         pygame.time.delay(10)
                         screen.blit(listetab[numtab].background , (0,0))
@@ -184,9 +191,6 @@ while 1:
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
-        score += 1000
-        if numtab == 15:
-            score += 10000
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
