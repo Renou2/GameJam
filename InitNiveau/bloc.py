@@ -7,8 +7,8 @@ class Bloc(pygame.sprite.Sprite):
         self.speed = speed
         self.image = image
         self.rect = image.get_rect()
-        self.rect.x=x-10
-        self.rect.y=y-5
+        self.rect.x=x-5
+        self.rect.y=y-4
         self.pos = image.get_rect().move(x, y)
         self.vector = vector
     def update(self):
