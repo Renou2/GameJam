@@ -49,7 +49,7 @@ def gestioncollGauche(listes,o):
 
 GRAVITE = 9.81
 
-
+score = 0
 numtab = 0
 screen = pygame.display.set_mode((1000, 1000))
 
@@ -184,6 +184,9 @@ while 1:
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
+        score += 1000
+        if numtab == 15:
+            score += 10000
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
