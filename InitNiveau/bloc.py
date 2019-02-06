@@ -2,7 +2,7 @@ import sys, pygame
 from pygame.locals import *
 
 class Bloc(pygame.sprite.Sprite):
-    def __init__(self, image, x, y, speed, vector):
+    def __init__(self, image, x, y, speed, vector ,type):
         pygame.sprite.Sprite.__init__(self)
         self.speed = speed
         self.image = image
@@ -11,6 +11,7 @@ class Bloc(pygame.sprite.Sprite):
         self.rect.y=y-4
         self.pos = image.get_rect().move(x, y)
         self.vector = vector
+        self.type = type
     def update(self):
         newpos = self.calcnewpos(self.pos,self.vector)
         self.pos = self.pos.move(self.vector)
