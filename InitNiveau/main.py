@@ -10,6 +10,12 @@ from math import *
 from perso import *
 clock = pygame.time.Clock()
 
+class chute:
+    def __init__(self,coll,posblocy,heightblocy):
+        self.coll = coll
+        self.posy=posblocy
+        self.tailley=heightblocy
+    
 
 def collision(rectA, rectB):
     if rectB.right < rectA.left:
@@ -47,20 +53,111 @@ def gestioncollGauche(listes,o):
     if not coll :
         o.pos.x-=o.speed
 
-def collisionbas(listes,o):
+def collisionbas(listes,o,listetab,numtab,screen,LISTE):
+    a = 2
     coll = False
     for bloc in listesprite:
         if o.rect.colliderect(bloc.rect):
-            if bloc.rect.top < o.rect.bottom: #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
+            if (o.rect.y+o.rect.height) > (bloc.rect.y+bloc.rect.height):
+                #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
                 print('COLL BAS')
-                coll=True
+                print(o.rect.y+o.rect.height)
+                print(bloc.rect.y+bloc.rect.height)
+                o.pos.y = bloc.rect.y+bloc.rect.height+10
 
-        if coll:
-            o.pos.y-5
+                coll = True
+
+                while verifCollide(o,listesprite) == None:
+
+                    k = pygame.key.get_pressed()
+                    pygame.event.pump()
+                    
+                    if(k[K_LEFT]):
+                        gestioncollGauche(listesprite,o)
+                    elif(k[K_RIGHT]):
+                        gestioncollDroite(listesprite,o)
+
+                    print('vers le bas')
+                    
+                    o.pos.y += a
+                    a+=0.2
+                    
+                    screen.blit(listetab[numtab].background , (0,0))
+                    LISTE.draw(screen)
+                    screen.blit(o.image, o.pos)
+                    #pygame.draw.rect(screen,(0,255,0), o.rect)
+                    #for item in LISTE:
+                        #pygame.draw.rect(screen,(255,0,0), item.rect)
+                    pygame.display.flip()
+
+                o.pos.y -=10
+                
     return coll
 
+def collisionchute(listes,o):
 
-GRAVITE = 9.81
+    blocposy = 0
+    bloctailley = 0
+    coll=False
+    for bloc in listesprite:
+        if o.rect.colliderect(bloc.rect):
+            if (o.rect.y+o.rect.height) < (bloc.rect.y+bloc.rect.height):
+                coll=True
+                blocposy=bloc.rect.y
+                bloctailley=bloc.rect.height
+                
+
+                                
+    c = chute(coll,blocposy,bloctailley)
+    
+    return c
+
+
+
+def gestionTombage(listes,o):
+
+    coll = False
+    for bloc in listesprite:
+        copyJ=o.rect.copy()
+        copyJ.y+=10
+        if collision(copyJ,bloc.rect):
+            coll=True
+    if not coll:
+
+        a=2
+        while verifCollide(o,listesprite) == None:
+
+            k = pygame.key.get_pressed()
+            pygame.event.pump()
+                    
+            if(k[K_LEFT]):
+                gestioncollGauche(listesprite,o)
+            elif(k[K_RIGHT]):
+                gestioncollDroite(listesprite,o)
+
+            print('vers le bas')
+                    
+            o.pos.y += a
+            a+=0.2
+                    
+            screen.blit(listetab[numtab].background , (0,0))
+            LISTE.draw(screen)
+            screen.blit(o.image, o.pos)
+            #pygame.draw.rect(screen,(0,255,0), o.rect)
+            #for item in LISTE:
+                #pygame.draw.rect(screen,(255,0,0), item.rect)
+            pygame.display.flip()
+
+            if o.pos.y > 1000:
+                o.pos.x = 200
+                o.pos.y = 600
+                break
+
+        o.pos.y -=10
+        
+
+
+GRAVITE = 7.81
 
 
 numtab = 0
@@ -116,11 +213,23 @@ while 1:
                         #//On calcule maintenant les valeurs absolues
                         o.ya = o.ya - o.yr
                         o.pos.y=o.ya
-                        if(collisionbas(listesprite,o)):
+
+                        if collisionchute(listesprite,o).coll:
+                            a = collisionchute(listesprite,o)
                             o.yr=0
                             o.t=0
-                            o.pos.y=old_y
+                            o.pos.y = a.posy-(o.rect.height+1)
                             pastouchesol=False
+
+                            break
+                            print('Collision en CHUTE libre')
+
+                        elif(collisionbas(listesprite,o,listetab,numtab,screen,LISTE)):
+                            o.yr=0
+                            o.t=0
+                            pastouchesol=False
+                            print('Collision en bas')
+
 
                         #o.pos.y=o.ya
                         o.t+=10
@@ -130,6 +239,14 @@ while 1:
 
                         if o.pos.x > 1000:
                             o.pos.x = 0
+
+                        if o.pos.y > 1000:
+                            o.pos.x = 200
+                            o.pos.y = 600
+                            o.yr=0
+                            o.t=0
+                            break
+                            
 
 
                         if(k[K_LEFT]):
@@ -141,7 +258,7 @@ while 1:
                         screen.blit(listetab[numtab].background , (0,0))
                         LISTE.draw(screen)
                         screen.blit(o.image, o.pos)
-                        pygame.draw.rect(screen,(0,255,0), o.rect)
+                        #pygame.draw.rect(screen,(0,255,0), o.rect)
                         pygame.display.flip()
 
 
@@ -173,14 +290,20 @@ while 1:
     if k[K_RIGHT]:
         if o.droite:
             gestioncollDroite(listesprite,o)
+            gestionTombage(listesprite,o)
 
 
     elif k[K_LEFT]:
         if o.gauche:
             gestioncollGauche(listesprite,o)
+            gestionTombage(listesprite,o)
 
     if o.pos.x > 1000:
         o.pos.x = 0
+
+    if o.pos.y > 1000:
+        o.pos.x = 200
+        o.pos.y = 600
 
     pygame.time.delay(5)
 
@@ -199,9 +322,9 @@ while 1:
     screen.blit(listetab[numtab].background , (0,0))
     LISTE.draw(screen)
     screen.blit(o.image, o.pos)
-    pygame.draw.rect(screen,(0,255,0), o.rect)
-    for item in LISTE:
-        pygame.draw.rect(screen,(255,0,0), item.rect)
+    #pygame.draw.rect(screen,(0,255,0), o.rect)
+    #for item in LISTE:
+        #pygame.draw.rect(screen,(255,0,0), item.rect)
     pygame.display.flip()
 
 
