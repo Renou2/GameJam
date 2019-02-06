@@ -6,6 +6,7 @@ import os
 
 pygame.init()
 
+
 frame = pygame.display.set_mode((600, 300), RESIZABLE)
 
 x=190
@@ -26,7 +27,12 @@ pygame.display.flip()
 
 smallText = pygame.font.Font("freesansbold.ttf",20)
 
-textVerif = smallText.render("Ce pseudo existe déjà, est ce bien vous ?", 1, (40,40,40))
+if len(sys.argv)>1:
+    nomj=sys.argv[1]
+else:
+    nomj="Pseudo"
+
+textVerif = smallText.render("Le pseudo "+nomj+" existe déjà, est ce bien vous ?", 1, (40,40,40))
 frame.blit(textVerif,[600/4, 300/4])
 btnOui = pygame.draw.rect(frame, (200,200,200),(x,y,largBut,hautBut))
 btnNon = pygame.draw.rect(frame, (200,200,200),(x2,y,largBut,hautBut))
@@ -38,11 +44,6 @@ if platform == "linux" or platform == "linux2":
 elif platform == "win32":
     commande="py"
     savecommande="py"
-
-if len(sys.argv)>1:
-    nomj=sys.argv[1]
-else:
-    nomj="ladaronnealeo"
 
 continuer = 1
 while continuer:

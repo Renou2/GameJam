@@ -33,7 +33,11 @@ def main():
     largB=150
     hautB=50
 
+    charSelect = 'sprite_kangoo0.png'
+
     bvalide=pygame.draw.rect(fond, (204, 122, 0),(x,y,largB,hautB))
+    bChar2=pygame.draw.rect(fond, (200,150,100),(450,100,150,100))
+    bChar1=pygame.draw.rect(fond, (200,150,100),(30,100,150,100))
 
     arial = pygame.font.SysFont("comicsansms.tff",35)
     arial.set_bold(False)
@@ -48,7 +52,7 @@ def main():
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
 
-    skin = pygame.image.load('image/bonhomme.png')
+    skin = pygame.image.load('image/sprite_kangoo0.png')
     skin = pygame.transform.scale(skin, (150, 100))
 
     skinf = pygame.image.load('image/bonhomme.png')
@@ -91,7 +95,7 @@ def main():
                         fichierC.write("Pieces:0\n")
                         fichierC.write("PointsProg:0\n")
                         fichierC.write("Medailles:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n")
-                        fichierC.write("Skin:bonhomme.png\n")
+                        fichierC.write("Skin:"+charSelect+"\n")
                         fichierC.write("Score:0,0,0,0,0\n")
                         fichierC.write("ScoreGeneral:0\n")
                         fichierC.close()
@@ -103,10 +107,16 @@ def main():
                         quit()
                     else:
                         print("est déja inscrit")
-                        commande=commande+" vuePopUp.py "+text
+                        commande=commande+" vuePopUp.py " +text
                         pygame.quit()
                         os.system(commande)
                         quit()
+                elif bChar1.collidepoint(event.pos):
+                    print("vous avez clicker sur Char1")
+                    charSelect = 'sprite_kangoo0.png'
+                elif bChar2.collidepoint(event.pos):
+                    print("vous avez clicker sur Char2")
+                    charSelect = 'bonhomme.png'
                 else:
                     active = False
                 color = color_active if active else color_inactive
@@ -143,8 +153,12 @@ def main():
 
         pygame.draw.rect(fond, color, input_box, 2)
         screen.blit(fond, (0, 0))
+
         screen.blit(skin,(30,100))
+
         screen.blit(skinf,(450,100))
+
         pygame.display.flip()
+
 
 if __name__ == '__main__': main()
