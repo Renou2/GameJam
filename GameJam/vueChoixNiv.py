@@ -66,6 +66,7 @@ def main():
                 #Récupération des skin
                 ligne=fichierC.readline()
                 skinp=ligne.split(":")[1]
+                skinp=skinp[:-1]
                 #Récupération du score
                 ligne=fichierC.readline()
                 s=ligne.split(":")
@@ -129,7 +130,7 @@ def main():
     fondniv5 = pygame.image.load('fonds/fond_volcan.png').convert()
     fondniv5 = pygame.transform.scale(fondniv5, (largB,hautB))
 
-    skin = pygame.image.load('image/bonhomme.png')
+    skin = pygame.image.load(compte.skin)
     skin = pygame.transform.scale(skin, (100, 100))
 
     rankG= pygame.image.load('image/medaille.png')

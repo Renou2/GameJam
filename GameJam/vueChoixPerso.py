@@ -33,7 +33,7 @@ def main():
     largB=150
     hautB=50
 
-    charSelect = 'sprite_kangoo0.png'
+    charSelect = 'image/sprite_kangoo0.png'
 
     bvalide=pygame.draw.rect(fond, (204, 122, 0),(x,y,largB,hautB))
     bChar2=pygame.draw.rect(fond, (200,150,100),(450,100,150,100))
@@ -56,7 +56,7 @@ def main():
     skin = pygame.transform.scale(skin, (150, 100))
 
     skinf = pygame.image.load('image/bonhomme.png')
-    skinf = pygame.transform.scale(skin, (150, 100))
+    skinf = pygame.transform.scale(skinf, (150, 100))
 
     if platform == "linux" or platform == "linux2":
         commande="python3"
@@ -113,10 +113,10 @@ def main():
                         quit()
                 elif bChar1.collidepoint(event.pos):
                     print("vous avez clicker sur Char1")
-                    charSelect = 'sprite_kangoo0.png'
+                    charSelect = 'image/sprite_kangoo0.png'
                 elif bChar2.collidepoint(event.pos):
                     print("vous avez clicker sur Char2")
-                    charSelect = 'bonhomme.png'
+                    charSelect = 'image/bonhomme.png'
                 else:
                     active = False
                 color = color_active if active else color_inactive
