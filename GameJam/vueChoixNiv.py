@@ -214,9 +214,9 @@ def main():
         imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
         imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
         # ajout et positionnement de l'image dans la fenetre
-        screen.blit(imgMedBronze, (x-10,y-50))
-        screen.blit(imgMedArgent, (x+20,y-50))
-        screen.blit(imgMedOr, (x+50,y-50))
+        screen.blit(imgMedBronze, (x-5,y-40))
+        screen.blit(imgMedArgent, (x+25,y-40))
+        screen.blit(imgMedOr, (x+55,y-40))
         # réinitialisation de l'image en mode 'griser'
         imgMedOr = pygame.image.load('image/pieceorgrisée.png')
         imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
@@ -237,9 +237,9 @@ def main():
         imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
         imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
         # ajout et positionnement de l'image dans la fenetre
-        screen.blit(imgMedBronze, (x+230,y-70))
-        screen.blit(imgMedArgent, (x+260,y-70))
-        screen.blit(imgMedOr, (x+290,y-70))
+        screen.blit(imgMedBronze, (x+220,y-60))
+        screen.blit(imgMedArgent, (x+250,y-60))
+        screen.blit(imgMedOr, (x+280,y-60))
         # réinitialisation de l'image en mode 'griser'
         imgMedOr = pygame.image.load('image/pieceorgrisée.png')
         imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
@@ -260,9 +260,9 @@ def main():
         imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
         imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
         # ajout et positionnement de l'image dans la fenetre
-        screen.blit(imgMedBronze, (x+210,y+180))
-        screen.blit(imgMedArgent, (x+213,y+180))
-        screen.blit(imgMedOr, (x+216,y+180))
+        screen.blit(imgMedBronze, (x+200,y+140))
+        screen.blit(imgMedArgent, (x+230,y+140))
+        screen.blit(imgMedOr, (x+260,y+140))
         # réinitialisation de l'image en mode 'griser'
         imgMedOr = pygame.image.load('image/pieceorgrisée.png')
         imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
@@ -284,9 +284,9 @@ def main():
         imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
         imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
         # ajout et positionnement de l'image dans la fenetre
-        screen.blit(imgMedBronze, (x,y+210))
-        screen.blit(imgMedArgent, (x+3,y+210))
-        screen.blit(imgMedOr, (x+6,y+210))
+        screen.blit(imgMedBronze, (x-10,y+170))
+        screen.blit(imgMedArgent, (x+20,y+170))
+        screen.blit(imgMedOr, (x+50,y+170))
         # réinitialisation de l'image en mode 'griser'
         imgMedOr = pygame.image.load('image/pieceorgrisée.png')
         imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
@@ -305,9 +305,9 @@ def main():
         imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
         imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
         # ajout et positionnement de l'image dans la fenetre
-        screen.blit(imgMedBronze, (x+80,y+400))
-        screen.blit(imgMedArgent, (x+83,y+400))
-        screen.blit(imgMedOr, (x+86,y+400))
+        screen.blit(imgMedBronze, (x+70,y+350))
+        screen.blit(imgMedArgent, (x+100,y+350))
+        screen.blit(imgMedOr, (x+130,y+350))
         # réinitialisation de l'image en mode 'griser'
         imgMedOr = pygame.image.load('image/pieceorgrisée.png')
         imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
