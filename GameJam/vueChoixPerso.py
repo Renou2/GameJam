@@ -90,7 +90,7 @@ def main():
                         fichierC.write(text+"!\n")
                         fichierC.write("Pieces:0\n")
                         fichierC.write("PointsProg:0\n")
-                        fichierC.write("Medailles:[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]\n")
+                        fichierC.write("Medailles:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0\n")
                         fichierC.write("Skin:bonhomme.png\n")
                         fichierC.write("Score:0,0,0,0,0\n")
                         fichierC.write("ScoreGeneral:0\n")

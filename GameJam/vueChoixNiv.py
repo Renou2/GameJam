@@ -58,6 +58,10 @@ def main():
 
                 #Récupération des medailles
                 ligne=fichierC.readline()
+                interm=ligne.split(":")[1]
+
+                for h in range(0,15):
+                    medaille.append(int(interm.split(",")[h]))
 
                 #Récupération des skin
                 ligne=fichierC.readline()
@@ -91,7 +95,6 @@ def main():
     compte.afficher()
 
 
-
     #Panel de button
 
     fond = pygame.image.load('fonds/serpentin.png').convert()
@@ -101,7 +104,7 @@ def main():
     x=150
     y=80
     largB=100
-    hautB=50
+    hautB=70
     colorB = pygame.Color(255, 148, 77 )
 
     bniv1=pygame.draw.rect(fond, colorB,(x,y+20,largB,hautB))
@@ -131,6 +134,13 @@ def main():
 
     rankG= pygame.image.load('image/medaille.png')
     rankG = pygame.transform.scale(rankG, (60, 60))
+
+    # innitialisation des images des médailles
+    imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+
+    imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+
+    imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
 
 
     # Test sur l'os
@@ -170,13 +180,12 @@ def main():
                         print("vous avez clicker sur niv5")
 
 
-
-
         mouse = pygame.mouse.get_pos()
         smallText = pygame.font.Font("freesansbold.ttf",25)
 
         textnomj = smallText.render(nomj,1,(210, 210, 210))
         fond.blit(textnomj, (670,270) )
+
 
         #blit des fonds
         screen.blit(fond, (0, 0))
@@ -188,8 +197,130 @@ def main():
 
 
 
+
+        # blit des médailles nvx1
+        f =0
+        # si le joueur possède ce type de médaille pour se niveau alors prendre l'image non grisée
+        if compte.medailles[f] == 1 :
+            imgMedBronze = pygame.image.load('image/piecebronze.png')
+        if compte.medailles[f+1] == 1 :
+            imgMedArgent = pygame.image.load('image/pieceargent.png')
+        if compte.medailles[f+2] == 1 :
+            imgMedOr = pygame.image.load('image/pieceor.png')
+        # ajouter 3 pour la vérification du prochain niveau
+        f = f+3
+        # redimmensionnment de l'image
+        imgMedOr = pygame.transform.scale(imgMedOr, (60, 60))
+        imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
+        imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
+        # ajout et positionnement de l'image dans la fenetre
+        screen.blit(imgMedBronze, (x-10,y-50))
+        screen.blit(imgMedArgent, (x+20,y-50))
+        screen.blit(imgMedOr, (x+50,y-50))
+        # réinitialisation de l'image en mode 'griser'
+        imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+        imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+        imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
+
+        # blit des médailles nvx2
+        # si le joueur possède ce type de médaille pour se niveau alors prendre l'image non grisée
+        if compte.medailles[f] == 1 :
+            imgMedBronze = pygame.image.load('image/piecebronze.png')
+        if compte.medailles[f+1] == 1 :
+            imgMedArgent = pygame.image.load('image/pieceargent.png')
+        if compte.medailles[f+2] == 1 :
+            imgMedOr = pygame.image.load('image/pieceor.png')
+        # ajouter 3 pour la vérification du prochain niveau
+        f = f+3
+        # redimmensionnment de l'image
+        imgMedOr = pygame.transform.scale(imgMedOr, (60, 60))
+        imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
+        imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
+        # ajout et positionnement de l'image dans la fenetre
+        screen.blit(imgMedBronze, (x+230,y-70))
+        screen.blit(imgMedArgent, (x+260,y-70))
+        screen.blit(imgMedOr, (x+290,y-70))
+        # réinitialisation de l'image en mode 'griser'
+        imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+        imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+        imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
+
+        # blit des médailles NVX3
+        # si le joueur possède ce type de médaille pour se niveau alors prendre l'image non grisée
+        if compte.medailles[f] == 1 :
+            imgMedBronze = pygame.image.load('image/piecebronze.png')
+        if compte.medailles[f+1] == 1 :
+            imgMedArgent = pygame.image.load('image/pieceargent.png')
+        if compte.medailles[f+2] == 1 :
+            imgMedOr = pygame.image.load('image/pieceor.png')
+        # ajouter 3 pour la vérification du prochain niveau
+        f = f+3
+        # redimmensionnment de l'image
+        imgMedOr = pygame.transform.scale(imgMedOr, (60, 60))
+        imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
+        imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
+        # ajout et positionnement de l'image dans la fenetre
+        screen.blit(imgMedBronze, (x+210,y+180))
+        screen.blit(imgMedArgent, (x+213,y+180))
+        screen.blit(imgMedOr, (x+216,y+180))
+        # réinitialisation de l'image en mode 'griser'
+        imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+        imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+        imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
+
+
+        # blit des médailles nvx4
+        # si le joueur possède ce type de médaille pour se niveau alors prendre l'image non grisée
+        if compte.medailles[f] == 1 :
+            imgMedBronze = pygame.image.load('image/piecebronze.png')
+        if compte.medailles[f+1] == 1 :
+            imgMedArgent = pygame.image.load('image/pieceargent.png')
+        if compte.medailles[f+2] == 1 :
+            imgMedOr = pygame.image.load('image/pieceor.png')
+        # ajouter 3 pour la vérification du prochain niveau
+        f = f+3
+        # redimmensionnment de l'image
+        imgMedOr = pygame.transform.scale(imgMedOr, (60, 60))
+        imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
+        imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
+        # ajout et positionnement de l'image dans la fenetre
+        screen.blit(imgMedBronze, (x,y+210))
+        screen.blit(imgMedArgent, (x+3,y+210))
+        screen.blit(imgMedOr, (x+6,y+210))
+        # réinitialisation de l'image en mode 'griser'
+        imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+        imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+        imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
+
+        # blit des médailles nvx5
+        # si le joueur possède ce type de médaille pour se niveau alors prendre l'image non grisée
+        if compte.medailles[f] == 1 :
+            imgMedBronze = pygame.image.load('image/piecebronze.png')
+        if compte.medailles[f+1] == 1 :
+            imgMedArgent = pygame.image.load('image/pieceargent.png')
+        if compte.medailles[f+2] == 1 :
+            imgMedOr = pygame.image.load('image/pieceor.png')
+        # redimmensionnment de l'image
+        imgMedOr = pygame.transform.scale(imgMedOr, (60, 60))
+        imgMedBronze = pygame.transform.scale(imgMedBronze, (60, 60))
+        imgMedArgent = pygame.transform.scale(imgMedArgent, (60, 60))
+        # ajout et positionnement de l'image dans la fenetre
+        screen.blit(imgMedBronze, (x+80,y+400))
+        screen.blit(imgMedArgent, (x+83,y+400))
+        screen.blit(imgMedOr, (x+86,y+400))
+        # réinitialisation de l'image en mode 'griser'
+        imgMedOr = pygame.image.load('image/pieceorgrisée.png')
+        imgMedBronze = pygame.image.load('image/piecebronzegrisée.png')
+        imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
+
+
+
+
+
         screen.blit(skin,(700,300))
         screen.blit(rankG,(750,0))
+
+
         pygame.display.flip()
 
 if __name__ == '__main__': main()
