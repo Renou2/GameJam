@@ -29,7 +29,7 @@ A0 = [
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 8, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -540,8 +540,9 @@ class Tableau(pygame.sprite.Group):
 
         imressort = pygame.image.load('ressort.png')
         imgspikesnc = pygame.image.load('spikes.png')
-
         imgspikes = pygame.transform.smoothscale(imgspikesnc,(25,25))
+        imgpoulpe= pygame.image.load('poulpe.png')
+        imgpoulpe = pygame.transform.smoothscale(imgpoulpe,(50,50))
         b = None
         for i in range(30):
             for j in range(40):
@@ -556,6 +557,10 @@ class Tableau(pygame.sprite.Group):
                 elif self.table[i][j]==3:
                     b = Bloc(imgspikes, j*25, i*25, 0, (0,0),3)
                     listesprite.add(b)
+                elif self.table[i][j]==8:
+                    b = Bloc(imgpoulpe, j*25, i*25, 0, (0,0),8)
+                    listesprite.add(b)
+
                 listesprite.draw(screen)
         return listesprite
         pygame.display.flip()

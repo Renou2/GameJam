@@ -11,10 +11,11 @@ from perso import *
 clock = pygame.time.Clock()
 
 class chute:
-    def __init__(self,coll,posblocy,heightblocy):
+    def __init__(self,coll,posblocy,heightblocy,bloctype):
         self.coll = coll
         self.posy=posblocy
         self.tailley=heightblocy
+        self.bloctype=bloctype
 
 
 def collision(rectA, rectB):
@@ -40,6 +41,14 @@ def gestioncollDroite(listes,o):
         copyJ.x+=o.speed
         if collision(copyJ,bloc.rect):
             coll=True
+            if bloc.type == 8:
+                for i in range(100):
+                    o.pos.x -=0.1
+                    screen.blit(listetab[numtab].background , (0,0))
+                    LISTE.draw(screen)
+                    screen.blit(o.image, o.pos)
+                    pygame.display.flip()
+                    pygame.time.delay(5)
     if not coll :
         o.pos.x+=o.speed
 
@@ -50,6 +59,15 @@ def gestioncollGauche(listes,o):
         copyJ.x-=o.speed
         if collision(copyJ,bloc.rect):
             coll=True
+            if bloc.type == 8:
+                for i in range(100):
+                    o.pos.x +=0.1
+                    screen.blit(listetab[numtab].background , (0,0))
+                    LISTE.draw(screen)
+                    screen.blit(o.image, o.pos)
+                    pygame.display.flip()
+                    pygame.time.delay(5)
+
     if not coll :
         o.pos.x-=o.speed
 
@@ -104,6 +122,7 @@ def collisionchute(listes,o):
 
     blocposy = 0
     bloctailley = 0
+    bloctype=None
     coll=False
     for bloc in listesprite:
         if o.rect.colliderect(bloc.rect):
@@ -111,8 +130,9 @@ def collisionchute(listes,o):
                 coll=True
                 blocposy=bloc.rect.y
                 bloctailley=bloc.rect.height
+                bloctype=bloc.type
 
-    c = chute(coll,blocposy,bloctailley)
+    c = chute(coll,blocposy,bloctailley,bloctype)
 
     return c
 
@@ -186,7 +206,7 @@ tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,505,945,990,0,1000 )
 tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,505,945,990,0,1000 )
 tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,505,945,990,0,1000 )
 tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,505,945,990,0,1000 )
-listetab =[tab2, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14]
+listetab =[tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14]
 
 
 
@@ -233,13 +253,52 @@ while 1:
 
                         if collisionchute(listesprite,o).coll:
                             a = collisionchute(listesprite,o)
-                            o.yr=0
-                            o.t=0
-                            o.pos.y = a.posy-(o.rect.height+1)
-                            pastouchesol=False
 
-                            break
-                            print('Collision en CHUTE libre')
+                            daronnealeo=True
+                            yini=o.pos.y
+                            if a.bloctype==4:
+                                o.pos.y-=10
+                                ach=4
+                                acb=4
+                                o.yr=0
+                                o.t=0
+                                while verifCollide(o,listesprite) == None:
+                                    k = pygame.key.get_pressed()
+                                    pygame.event.pump()
+                                    if(k[K_LEFT]):
+                                        gestioncollGauche(listesprite,o)
+                                    elif(k[K_RIGHT]):
+                                        gestioncollDroite(listesprite,o)
+
+                                    print('vers le haut')
+
+                                    if(o.pos.y>yini-100 and daronnealeo):
+                                        o.pos.y -= ach
+                                        ach+=0.5
+                                        print('a')
+                                    else:
+                                        o.pos.y += acb
+                                        acb+=0.5
+                                        daronnealeo=False
+
+                                    if o.pos.y > 750:
+                                        o.pos.x = listetab[numtab].xdebut
+                                        o.pos.y = listetab[numtab].ydebut+10
+                                        break
+                                    pygame.time.delay(15)
+                                    screen.blit(listetab[numtab].background , (0,0))
+                                    LISTE.draw(screen)
+                                    screen.blit(o.image, o.pos)
+                                    pygame.draw.rect(screen,(0,255,0), o.rect)
+                                    #for item in LISTE:
+                                        #pygame.draw.rect(screen,(255,0,0), item.rect)
+                                    pygame.display.flip()
+                            else:
+                                o.yr=0
+                                o.t=0
+                                o.pos.y = a.posy-(o.rect.height+1)
+                                break
+                                print('Collision en CHUTE libre')
 
                         elif(collisionbas(listesprite,o,listetab,numtab,screen,LISTE)):
                             o.yr=0
