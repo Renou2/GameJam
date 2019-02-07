@@ -20,40 +20,41 @@ def estInscrit(nomJ):
 def main():
     # Initialisation de la fenêtre d'affichage
     pygame.init()
-    screen = pygame.display.set_mode((630, 300))
-    pygame.display.set_caption('Nom du jeu')
+    screen = pygame.display.set_mode((630, 500))
+    pygame.display.set_caption('The Infernal Kangaroo''s Adventure - ChoixPersonnage')
 
 
     fond = pygame.image.load('fonds/fond_regles.jpg').convert()
-    fond = pygame.transform.smoothscale(fond, (630, 300))
+    # fond = pygame.transform.smoothscale(fond, (630, 300))
     fond = fond.convert_alpha()
 
     x=400
-    y=240
+    y=370
     largB=150
     hautB=50
 
-    charSelect = 'image/sprite_kangoo0.png'
+    charSelect = 'image/kangoo0.png'
 
     bvalide=pygame.draw.rect(fond, (204, 122, 0),(x,y,largB,hautB))
-    bChar2=pygame.draw.rect(fond, (200,150,100),(450,100,150,100))
-    bChar1=pygame.draw.rect(fond, (200,150,100),(30,100,150,100))
+    bChar2=pygame.draw.rect(fond, (23, 70, 145),(450,170,150,100))
+    bChar1=pygame.draw.rect(fond, (23, 70, 145),(30,170,150,100))
 
     arial = pygame.font.SysFont("comicsansms.tff",35)
     arial.set_bold(False)
 
-    police2 =pygame.font.SysFont("comicsansms.tff",40)
+
+    bigText = pygame.font.Font("leadcoat.ttf",30)
 
 
-    input_box = pygame.Rect(190, 240, 200, 50)
+    input_box = pygame.Rect(190, 370, 200, 50)
     active = False
     text = ''
     color_inactive = pygame.Color(204, 122, 0 )
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
 
-    skin = pygame.image.load('image/sprite_kangoo0.png')
-    skin = pygame.transform.scale(skin, (150, 100))
+    skin = pygame.image.load('image/kangoo0.png')
+    skin = pygame.transform.scale(skin, (150, 130))
 
     skinf = pygame.image.load('image/bonhomme.png')
     skinf = pygame.transform.scale(skinf, (150, 100))
@@ -113,7 +114,7 @@ def main():
                         quit()
                 elif bChar1.collidepoint(event.pos):
                     print("vous avez clicker sur Char1")
-                    charSelect = 'image/sprite_kangoo0.png'
+                    charSelect = 'image/kangoo0.png'
                 elif bChar2.collidepoint(event.pos):
                     print("vous avez clicker sur Char2")
                     charSelect = 'image/bonhomme.png'
@@ -129,9 +130,9 @@ def main():
                         text += event.unicode
 
         txt_b = arial.render("Entrez votre nom", True, (10,10,10))
-        fond.blit(txt_b, (input_box.x, input_box.y-30))
+
         txt_surface = arial.render(text, True, (10,10,10))
-        fond.blit(txt_surface, (input_box.x+5, input_box.y+5))
+
 
         #Surlignage du bouton
         mouse = pygame.mouse.get_pos()
@@ -141,22 +142,36 @@ def main():
         else:
             bvalide=pygame.draw.rect(fond, (204, 122, 0),(x,y,largB,hautB))
 
+
+        if 30+150 > mouse[0] > 30 and 170+100 > mouse[1] > 170:
+            bChar1=pygame.draw.rect(fond, (44, 91, 165),(30,170,150,100))
+        else:
+            bChar1=pygame.draw.rect(fond, (23, 70, 145),(30,170,150,100))
+
+
+        if 450+150 > mouse[0] > 450 and 170+100> mouse[1] > 170:
+            bChar2=pygame.draw.rect(fond, (44, 91, 165),(450,170,150,100))
+        else:
+            bChar2=pygame.draw.rect(fond, (23, 70, 145),(450,170,150,100))
+
         textBins = arial.render("Valider",1,(40, 40, 40))
         fond.blit(textBins, (x+30,y+10) )
 
 
 
         #Blit de tout les élément
-
-        txtP = police2.render("Sélectionnez un personnage", True, (10,10,10))
-        fond.blit(txtP, (150,10) )
-
         pygame.draw.rect(fond, color, input_box, 2)
         screen.blit(fond, (0, 0))
 
-        screen.blit(skin,(30,100))
+        txtP = bigText.render("Selectionnez un personnage", 1, (204, 122, 0))
+        screen.blit(txtP, (160,30) )
 
-        screen.blit(skinf,(450,100))
+        screen.blit(txt_b, (input_box.x, input_box.y-30))
+        screen.blit(txt_surface, (input_box.x+5, input_box.y+5))
+
+        screen.blit(skin,(30,140))
+
+        screen.blit(skinf,(450,170))
 
         pygame.display.flip()
 
