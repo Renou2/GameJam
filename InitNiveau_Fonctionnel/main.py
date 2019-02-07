@@ -163,6 +163,7 @@ def gestionTombage(listes,o):
 
 GRAVITE = 7.81
 
+score = 0
 
 numtab = 0
 screen = pygame.display.set_mode((1000, 750))
@@ -176,17 +177,17 @@ tab2 = Tableau('fond_foret.png', 0, 1, o,  25,675,960,990,0,1000 )
 tab3 = Tableau('fond_foret.png', 0, 2,  o, 25,505,960,990,0,1000 )
 tab4 = Tableau('fond_foret.png', 0, 3,  o, 25,652,960,990,0,1000 )
 tab5 = Tableau('fond_foret.png', 0, 4,  o, 25,675,960,990,0,1000 )
-tab6 = Tableau('fond_foret.png', 0, 5,  o, 25,0,945,990,0,1000 )
-tab7 = Tableau('fond_foret.png', 0, 6,  o, 25,505,945,990,0,1000 )
-tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,505,945,990,0,1000 )
-tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,0,1000 )
-tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990,0,1000 )
-tab11 = Tableau('fond_foret.png', 0, 10,  o, 25,505,945,990,0,1000 )
-tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,505,945,990,0,1000 )
-tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,505,945,990,0,1000 )
-tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,505,945,990,0,1000 )
-tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,505,945,990,0,1000 )
-listetab =[tab2, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14]
+tab6 = Tableau('fond_foret.png', 0, 5,  o, 25,52,945,990,0,1000 )
+tab7 = Tableau('fond_foret.png', 0, 6,  o, 25,52,945,990,0,1000 )
+tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,405,945,990,700,0 )
+tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,700,0 )
+tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990, 0,1000 )
+tab11 = Tableau('fond_foret.png', 0, 10,  o, 25,60,945,990,0,1000 )
+tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,635,945,990,0,1000 )
+tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,545,945,990,0,1000 )
+tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,125,945,990,0,1000 )
+tab15 = Tableau('fond_foret.png', 0, 14,  o, 25,670,945,990,0,1000 )
+listetab =[tab1, tab2, tab3, tab4, tab5, tab6, tab11, tab12, tab13, tab14, tab15, tab1, tab2, tab3, tab4, tab5, tab6, tab11, tab12, tab13, tab14, tab15]
 
 
 
@@ -329,6 +330,9 @@ while 1:
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
+        score += 1000
+        if numtab == 14 :
+            score += 10000
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
