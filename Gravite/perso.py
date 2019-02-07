@@ -1,42 +1,35 @@
-
-import sys, pygame
-vec = pygame.math.Vector2
-from pygame.locals import *
-pygame.init()
-import tableau
-from math import *
-GRAVITE = 9.81
+import pygame as pg
+vec = pg.math.Vector2
+GRAVITE = 0.0
 
 
-
-class Personnage(pygame.sprite.Sprite):
+class Personnage(pg.sprite.Sprite):
     def __init__(self, image):
-        self.speed = 15
+        self.speed = 1
         self.image = image
         self.rect = image.get_rect()
-        self.position = vec(0,0)
-        self.pos = pygame.Rect(0, 0, 25, 25)
+        self.pos = vec(0, 0)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
-    def update(self):
+    def jump(self, LISTE):
+        self.rect.y += 1
+        collide = pg.sprite.spritecollide(self, LISTE, False)
+        self.rect.y-=1
+        if collide:
+            self.vel.y = -13
+            if collide[0].type == 4:
+                self.vel.y = -24
+
+    def update(self, LISTE):
         self.acc = vec(0, 0.5)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            print(12)
-            self.acc.x = -0,5
-        if keys[pygame.K_RIGHT]:
-            self.acc.x = 0,5
+        keys = pg.key.get_pressed()
+        if keys[pg.K_LEFT]:
+            self.acc.x = -0.5
+        if keys[pg.K_RIGHT]:
+            self.acc.x = 0.5
+        # equations of motion
+        self.acc.x += self.vel.x * -0.12
         self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc
 
-        self.pos.x += self.vel.x + 0.5 * self.acc.x
-        self.pos.y += self.vel.y + 0.5 * self.acc.y
-        self.rect= self.pos
-        self.rect.y-=12
-
-
-#def verifCollide(perso, listesprite):
-#    for sprite in listesprite:
-#        #print(sprite)
-#        if  pygame.sprite.collide_rect(perso,sprite) :
-#            return sprite
-#    return None
+        self.rect.midbottom = self.pos
