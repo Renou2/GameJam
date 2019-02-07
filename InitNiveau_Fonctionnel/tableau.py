@@ -532,11 +532,11 @@ class Tableau(pygame.sprite.Group):
         elif self.niveau==1:
             imbloc = pygame.image.load('ice_block.png')
         elif self.niveau==2:
-            imbloc = pygame.image.load('stone_block.png')
-        elif self.niveau==3:
-            imbloc = pygame.image.load('brick_wall.png')
-        elif self.niveau==4:
             imbloc = pygame.image.load('lava_block.png')
+        elif self.niveau==3:
+            imbloc = pygame.image.load('stone_block.png')
+        elif self.niveau==4:
+            imbloc = pygame.image.load('brick-wall.png')
 
         imressort = pygame.image.load('ressort.png')
         imgspikesnc = pygame.image.load('spikes.png')
