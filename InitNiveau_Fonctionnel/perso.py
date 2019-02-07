@@ -12,8 +12,9 @@ class Personnage(pygame.sprite.Sprite):
     def __init__(self, image):
         self.speed = 15
         self.image = image
+        #self.image_rect.center = self.rect.center
         self.rect = image.get_rect()
-        self.pos = pygame.Rect(200, 200, 25, 36)
+        self.pos = pygame.Rect(200, 200, 25, 25)
         self.xa = 200
         self.ya = 200
         self.t=0

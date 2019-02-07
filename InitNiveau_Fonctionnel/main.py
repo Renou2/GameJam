@@ -15,7 +15,7 @@ class chute:
         self.coll = coll
         self.posy=posblocy
         self.tailley=heightblocy
-    
+
 
 def collision(rectA, rectB):
     if rectB.right < rectA.left:
@@ -71,27 +71,33 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
 
                     k = pygame.key.get_pressed()
                     pygame.event.pump()
-                    
+
                     if(k[K_LEFT]):
                         gestioncollGauche(listesprite,o)
                     elif(k[K_RIGHT]):
                         gestioncollDroite(listesprite,o)
 
                     print('vers le bas')
-                    
+
                     o.pos.y += a
-                    a+=0.2
-                    
+                    a+=0.4
+
+                    if o.pos.y > 1000:
+                        o.pos.x = listetab[numtab].xdebut
+                        o.pos.y = listetab[numtab].ydebut+10
+                        break
+
+                    pygame.time.delay(15)
                     screen.blit(listetab[numtab].background , (0,0))
                     LISTE.draw(screen)
                     screen.blit(o.image, o.pos)
-                    #pygame.draw.rect(screen,(0,255,0), o.rect)
+                    pygame.draw.rect(screen,(0,255,0), o.rect)
                     #for item in LISTE:
                         #pygame.draw.rect(screen,(255,0,0), item.rect)
                     pygame.display.flip()
 
                 o.pos.y -=10
-                
+
     return coll
 
 def collisionchute(listes,o):
@@ -105,11 +111,11 @@ def collisionchute(listes,o):
                 coll=True
                 blocposy=bloc.rect.y
                 bloctailley=bloc.rect.height
-                
 
-                                
+
+
     c = chute(coll,blocposy,bloctailley)
-    
+
     return c
 
 
@@ -129,21 +135,23 @@ def gestionTombage(listes,o):
 
             k = pygame.key.get_pressed()
             pygame.event.pump()
-                    
+
             if(k[K_LEFT]):
                 gestioncollGauche(listesprite,o)
             elif(k[K_RIGHT]):
                 gestioncollDroite(listesprite,o)
 
             print('vers le bas')
-                    
+
             o.pos.y += a
-            a+=0.2
-                    
+            a+=0.4
+
+            pygame.time.delay(15)
+
             screen.blit(listetab[numtab].background , (0,0))
             LISTE.draw(screen)
             screen.blit(o.image, o.pos)
-            #pygame.draw.rect(screen,(0,255,0), o.rect)
+            pygame.draw.rect(screen,(0,255,0), o.rect)
             #for item in LISTE:
                 #pygame.draw.rect(screen,(255,0,0), item.rect)
             pygame.display.flip()
@@ -153,23 +161,37 @@ def gestionTombage(listes,o):
                 o.pos.y = listetab[numtab].ydebut+10
                 break
 
-        o.pos.y -=10
-        
+        x=collisionchute(listesprite,o)
+        o.pos.y = x.posy-(o.rect.height+1)
+
 
 
 GRAVITE = 7.81
 
 
 numtab = 0
-screen = pygame.display.set_mode((1000, 1000))
+screen = pygame.display.set_mode((1000, 750))
 
-perso = pygame.image.load('perso.png')
+perso = pygame.image.load('sprite_kangoo0.png').convert_alpha()
+perso = pygame.transform.smoothscale(perso,(50,50))
 listesprite = pygame.sprite.Group()
 o = Personnage(perso)
-tab1 = Tableau('sky2.jpg', 0, 0, o, 25,675,960,990,0,1000)
-tab2 = Tableau('sky.jpg', 0, 1, o,  25,675,960,990,0,1000 )
-tab3 = Tableau('foret.jpg', 0, 2,  o, 200,600,500,1000,0,500 )
-listetab =[tab1, tab2, tab3]
+tab1 = Tableau('fond_foret.png', 0, 0, o, 25,675,960,990,0,1000)
+tab2 = Tableau('fond_foret.png', 0, 1, o,  25,675,960,990,0,1000 )
+tab3 = Tableau('fond_foret.png', 0, 2,  o, 25,505,960,990,0,1000 )
+tab4 = Tableau('fond_foret.png', 0, 3,  o, 25,652,960,990,0,1000 )
+tab5 = Tableau('fond_foret.png', 0, 4,  o, 25,675,960,990,0,1000 )
+tab6 = Tableau('fond_foret.png', 0, 5,  o, 25,0,945,990,0,1000 )
+tab7 = Tableau('fond_foret.png', 0, 6,  o, 25,505,945,990,0,1000 )
+tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,505,945,990,0,1000 )
+tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,0,1000 )
+tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990,0,1000 )
+tab11 = Tableau('fond_foret.png', 0, 10,  o, 25,505,945,990,0,1000 )
+tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,505,945,990,0,1000 )
+tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,505,945,990,0,1000 )
+tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,505,945,990,0,1000 )
+tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,505,945,990,0,1000 )
+listetab =[tab6, tab2, tab3]
 
 
 
@@ -246,7 +268,7 @@ while 1:
                             o.yr=0
                             o.t=0
                             break
-                            
+
 
 
                         if(k[K_LEFT]):
@@ -254,11 +276,11 @@ while 1:
                         elif(k[K_RIGHT]):
                                 gestioncollDroite(listesprite,o)
 
-                        pygame.time.delay(10)
+                        pygame.time.delay(15)
                         screen.blit(listetab[numtab].background , (0,0))
                         LISTE.draw(screen)
                         screen.blit(o.image, o.pos)
-                        #pygame.draw.rect(screen,(0,255,0), o.rect)
+                        pygame.draw.rect(screen,(0,255,0), o.rect)
                         pygame.display.flip()
 
 
@@ -305,7 +327,7 @@ while 1:
         o.pos.x = listetab[numtab].xdebut
         o.pos.y = listetab[numtab].ydebut+10
 
-    pygame.time.delay(5)
+    pygame.time.delay(15)
 
     o.peutsauter=True
 
@@ -317,10 +339,13 @@ while 1:
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
+    print('X : '+str(o.pos.x))
+    print('Y : '+str(o.pos.y))
+
     screen.blit(listetab[numtab].background , (0,0))
     LISTE.draw(screen)
     screen.blit(o.image, o.pos)
-    #pygame.draw.rect(screen,(0,255,0), o.rect)
+    pygame.draw.rect(screen,(0,255,0), o.rect)
     #for item in LISTE:
         #pygame.draw.rect(screen,(255,0,0), item.rect)
     pygame.display.flip()
