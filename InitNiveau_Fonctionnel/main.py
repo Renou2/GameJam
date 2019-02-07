@@ -60,11 +60,11 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
         if o.rect.colliderect(bloc.rect):
             if (o.rect.y+o.rect.height) > (bloc.rect.y+bloc.rect.height):
                 #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
+
                 print('COLL BAS')
                 print(o.rect.y+o.rect.height)
                 print(bloc.rect.y+bloc.rect.height)
                 o.pos.y = bloc.rect.y+bloc.rect.height+10
-
                 coll = True
 
                 while verifCollide(o,listesprite) == None:
@@ -82,7 +82,7 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
                     o.pos.y += a
                     a+=0.4
 
-                    if o.pos.y > 1000:
+                    if o.pos.y > 750:
                         o.pos.x = listetab[numtab].xdebut
                         o.pos.y = listetab[numtab].ydebut+10
                         break
@@ -112,13 +112,9 @@ def collisionchute(listes,o):
                 blocposy=bloc.rect.y
                 bloctailley=bloc.rect.height
 
-
-
     c = chute(coll,blocposy,bloctailley)
 
     return c
-
-
 
 def gestionTombage(listes,o):
 
@@ -129,7 +125,6 @@ def gestionTombage(listes,o):
         if collision(copyJ,bloc.rect):
             coll=True
     if not coll:
-
         a=2
         while verifCollide(o,listesprite) == None:
 
@@ -146,7 +141,13 @@ def gestionTombage(listes,o):
             o.pos.y += a
             a+=0.4
 
+            if o.pos.y > 720:
+                o.pos.x = listetab[numtab].xdebut
+                o.pos.y = listetab[numtab].ydebut+10
+                break
+
             pygame.time.delay(15)
+
 
             screen.blit(listetab[numtab].background , (0,0))
             LISTE.draw(screen)
@@ -156,14 +157,8 @@ def gestionTombage(listes,o):
                 #pygame.draw.rect(screen,(255,0,0), item.rect)
             pygame.display.flip()
 
-            if o.pos.y > 1000:
-                o.pos.x = listetab[numtab].xdebut
-                o.pos.y = listetab[numtab].ydebut+10
-                break
-
         x=collisionchute(listesprite,o)
         o.pos.y = x.posy-(o.rect.height+1)
-
 
 
 GRAVITE = 7.81
@@ -191,7 +186,7 @@ tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,505,945,990,0,1000 )
 tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,505,945,990,0,1000 )
 tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,505,945,990,0,1000 )
 tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,505,945,990,0,1000 )
-listetab =[tab6, tab2, tab3]
+listetab =[tab2, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14]
 
 
 
@@ -261,8 +256,7 @@ while 1:
 
                         if o.pos.x > 1000:
                             o.pos.x = 0
-
-                        if o.pos.y > 1000:
+                        if o.pos.y > 750:
                             o.pos.x = listetab[numtab].xdebut
                             o.pos.y = listetab[numtab].ydebut
                             o.yr=0
@@ -323,7 +317,7 @@ while 1:
     if o.pos.x > 1000:
         o.pos.x = 0
 
-    if o.pos.y > 1000:
+    if o.pos.y > 750 or o.pos.y<0:
         o.pos.x = listetab[numtab].xdebut
         o.pos.y = listetab[numtab].ydebut+10
 
@@ -331,16 +325,12 @@ while 1:
 
     o.peutsauter=True
 
-
     if Tableau.verifSortie(listetab[numtab], o):
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
-
-    print('X : '+str(o.pos.x))
-    print('Y : '+str(o.pos.y))
 
     screen.blit(listetab[numtab].background , (0,0))
     LISTE.draw(screen)
