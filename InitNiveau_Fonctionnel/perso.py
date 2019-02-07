@@ -27,6 +27,7 @@ class Personnage(pygame.sprite.Sprite):
         self.speed = 5
         self.droite=False
         self.gauche=False
+        self.compteurpiece=0
 
 
 def verifCollide(perso, listesprite):

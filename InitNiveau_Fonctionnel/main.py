@@ -49,6 +49,9 @@ def gestioncollDroite(listes,o):
                     screen.blit(o.image, o.pos)
                     pygame.display.flip()
                     pygame.time.delay(5)
+            elif bloc.type ==5:
+                o.compteurpiece+=1
+                listesprite.remove(bloc)
     if not coll :
         o.pos.x+=o.speed
 
@@ -67,6 +70,9 @@ def gestioncollGauche(listes,o):
                     screen.blit(o.image, o.pos)
                     pygame.display.flip()
                     pygame.time.delay(5)
+            elif bloc.type ==5:
+                o.compteurpiece+=1
+                listesprite.remove(bloc)
 
     if not coll :
         o.pos.x-=o.speed
@@ -76,6 +82,10 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
     coll = False
     for bloc in listesprite:
         if o.rect.colliderect(bloc.rect):
+            if verifCollide(o,listesprite) != None:
+                if bloc.type ==5:
+                    o.compteurpiece+=1
+                    listesprite.remove(bloc)
             if (o.rect.y+o.rect.height) > (bloc.rect.y+bloc.rect.height):
                 #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
 
@@ -85,7 +95,9 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
                 o.pos.y = bloc.rect.y+bloc.rect.height+10
                 coll = True
 
+
                 while verifCollide(o,listesprite) == None:
+
 
                     k = pygame.key.get_pressed()
                     pygame.event.pump()
@@ -134,6 +146,7 @@ def collisionchute(listes,o):
 
     c = chute(coll,blocposy,bloctailley,bloctype)
 
+
     return c
 
 def gestionTombage(listes,o):
@@ -144,6 +157,10 @@ def gestionTombage(listes,o):
         copyJ.y+=10
         if collision(copyJ,bloc.rect):
             coll=True
+            if verifCollide(o,listesprite) != None:
+                if bloc.type ==5:
+                    o.compteurpiece+=1
+                    listesprite.remove(bloc)
     if not coll:
         a=2
         while verifCollide(o,listesprite) == None:
@@ -181,9 +198,8 @@ def gestionTombage(listes,o):
         o.pos.y = x.posy-(o.rect.height+1)
 
 
-GRAVITE = 7.81
+GRAVITE = 7.01
 
-score = 0
 
 numtab = 0
 screen = pygame.display.set_mode((1000, 750))
@@ -197,31 +213,17 @@ tab2 = Tableau('fond_foret.png', 0, 1, o,  25,675,960,990,0,1000 )
 tab3 = Tableau('fond_foret.png', 0, 2,  o, 25,505,960,990,0,1000 )
 tab4 = Tableau('fond_foret.png', 0, 3,  o, 25,652,960,990,0,1000 )
 tab5 = Tableau('fond_foret.png', 0, 4,  o, 25,675,960,990,0,1000 )
-<<<<<<< HEAD
 tab6 = Tableau('fond_foret.png', 0, 5,  o, 25,52,945,990,0,1000 )
 tab7 = Tableau('fond_foret.png', 0, 6,  o, 25,52,945,990,0,1000 )
-tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,405,945,990,700,0 )
-tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,700,0 )
-tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990, 0,1000 )
+tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,405,945,990,0,1000 )
+tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,0,1000 )
+tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990,0,1000 )
 tab11 = Tableau('fond_foret.png', 0, 10,  o, 25,60,945,990,0,1000 )
 tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,635,945,990,0,1000 )
 tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,545,945,990,0,1000 )
 tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,125,945,990,0,1000 )
-tab15 = Tableau('fond_foret.png', 0, 14,  o, 25,670,945,990,0,1000 )
-listetab =[tab1, tab2, tab3, tab4, tab5, tab6, tab11, tab12, tab13, tab14, tab15, tab1, tab2, tab3, tab4, tab5, tab6, tab11, tab12, tab13, tab14, tab15]
-=======
-tab6 = Tableau('fond_foret.png', 0, 5,  o, 25,0,945,990,0,1000 )
-tab7 = Tableau('fond_foret.png', 0, 6,  o, 25,505,945,990,0,1000 )
-tab8 = Tableau('fond_foret.png', 0, 7,  o, 25,505,945,990,0,1000 )
-tab9 = Tableau('fond_foret.png', 0, 8,  o, 25,505,945,990,0,1000 )
-tab10 = Tableau('fond_foret.png', 0, 9,  o, 25,505,945,990,0,1000 )
-tab11 = Tableau('fond_foret.png', 0, 10,  o, 25,505,945,990,0,1000 )
-tab12 = Tableau('fond_foret.png', 0, 11,  o, 25,505,945,990,0,1000 )
-tab13 = Tableau('fond_foret.png', 0, 12,  o, 25,505,945,990,0,1000 )
-tab14 = Tableau('fond_foret.png', 0, 13,  o, 25,505,945,990,0,1000 )
-tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,505,945,990,0,1000 )
+tab14 = Tableau('fond_foret.png', 0, 14,  o, 25,670,945,990,0,1000 )
 listetab =[tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10, tab11, tab12, tab13, tab14]
->>>>>>> 2de5ab01e653b8c04671e0fa49a313a22c8db362
 
 
 
@@ -306,9 +308,16 @@ while 1:
                                     screen.blit(o.image, o.pos)
                                     pygame.draw.rect(screen,(0,255,0), o.rect)
                                     #for item in LISTE:
-                                        #pygame.draw.rect(screen,(255,0,0), item.rect)
+                                      #pygame.draw.rect(screen,(255,0,0), item.rect)
                                     pygame.display.flip()
+
                             else:
+                                b=verifCollide(o,listesprite)
+                                if b != None:
+                                    if b.type == 5:
+                                        o.compteurpiece+=1
+                                        listesprite.remove(b)
+
                                 o.yr=0
                                 o.t=0
                                 o.pos.y = a.posy-(o.rect.height+1)
@@ -399,13 +408,11 @@ while 1:
 
     o.peutsauter=True
 
+
     if Tableau.verifSortie(listetab[numtab], o):
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
-        score += 1000
-        if numtab == 14 :
-            score += 10000
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
