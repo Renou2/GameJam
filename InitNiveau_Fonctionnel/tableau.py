@@ -77,7 +77,7 @@ A2 = [
     [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
-    [1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -365,7 +365,7 @@ A10 = [
     ]
 
 A11 = [
-        [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
@@ -505,11 +505,12 @@ class Tableau(pygame.sprite.Group):
         self.width = 900
         self.height = 900
         background = pygame.image.load(background).convert()
-        self.background = pygame.transform.smoothscale(background,(1000,1000))
+        self.background = pygame.transform.smoothscale(background,(1000,750))
         self.table = listetable[niveau][tableau]
         self.perso = perso
         self.xdebut = xdebut
         self.ydebut = ydebut
+        self.niveau= niveau
         self.xafin = xafin
         self.yafin = yafin
         self.xbfin = xbfin
@@ -517,30 +518,37 @@ class Tableau(pygame.sprite.Group):
     def initPerso(self, perso, screen):
         self.perso.pos.x = self.xdebut
         self.perso.pos.y = self.ydebut
+        #self.perso.pos = self.perso.rect
         self.perso.rect = self.perso.pos
         screen.blit(self.perso.image, self.perso.pos)
 
 
     def dessinerTableau(self, screen, listesprite):
         screen.blit(self.background,(0,0))
-        imbloc = pygame.image.load('brick-wall.png')
+        imbloc=None
+        if self.niveau ==0:
+            imbloc = pygame.image.load('wood.png')
+        else:
+            imbloc = pygame.image.load('brick-wall.png')
         imressort = pygame.image.load('ressort.png')
-        imgspikesnc = pygame.image.load('spikes.png').convert()
-        imgspikesnc = imgspikesnc.convert_alpha()
+        imgspikesnc = pygame.image.load('spikes.png')
+
         imgspikes = pygame.transform.smoothscale(imgspikesnc,(25,25))
         b = None
         for i in range(30):
             for j in range(40):
-                if self.table[i][j] == 1:
-                    b = Bloc(imbloc, j*25, i*25, 0, (0,0), 1)
-                    listesprite.add(b)
-                    #screen.blit(b.image, b.pos)
-                elif self.table[i][j] ==4:
-                    b = Bloc(imressort, j*25, i*25, 0, (0,0),4)
-                    listesprite.add(b)
-                elif self.table[i][j]==3:
-                    b = Bloc(imgspikes, j*25, i*25, 0, (0,0),3)
-                    listesprite.add(b)
+                #Si niveau = foret
+                if self.niveau ==0:
+                    if self.table[i][j] == 1:
+                        b = Bloc(imbloc, j*25, i*25, 0, (0,0), 1)
+                        listesprite.add(b)
+                        #screen.blit(b.image, b.pos)
+                    elif self.table[i][j] ==4:
+                        b = Bloc(imressort, j*25, i*25, 0, (0,0),4)
+                        listesprite.add(b)
+                    elif self.table[i][j]==3:
+                        b = Bloc(imgspikes, j*25, i*25, 0, (0,0),3)
+                        listesprite.add(b)
                 listesprite.draw(screen)
         return listesprite
         pygame.display.flip()
