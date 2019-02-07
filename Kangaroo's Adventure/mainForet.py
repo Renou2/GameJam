@@ -8,6 +8,7 @@ from perso import Personnage
 from bloc import Bloc
 from math import *
 from perso import *
+
 clock = pygame.time.Clock()
 
 class chute:
@@ -16,6 +17,27 @@ class chute:
         self.posy=posblocy
         self.tailley=heightblocy
         self.bloctype=bloctype
+class Horloge:
+    def __init__(self,frameC):
+        self.frameC = frameC
+
+
+
+def timer(horloge):
+    total_seconds = 180 - (horloge.frameC // 60)
+    if total_seconds < 0:
+        total_seconds = 0
+    minutes = total_seconds // 60
+    seconds = total_seconds % 60
+    output_string = "Time left: {0:02}:{1:02}".format(minutes, seconds)
+    text = smallText.render(output_string, True,(210, 210, 210) )
+    horloge.frameC += 1
+    return text
+
+
+
+
+
 
 
 def collision(rectA, rectB):
@@ -34,6 +56,25 @@ def collision(rectA, rectB):
     # Dans tous les autres cas il y a collision
     return True
 
+def collipicanimal(LISTE, o, listetab, screen, bloc):
+    if bloc.type == 6 or bloc.type == 7 or bloc.type == 3 or bloc.type == 9:
+        o.score-=75
+        LISTE.update()
+        Tableau.initPerso(listetab[numtab], o, screen)
+        screen.blit(listetab[numtab].background , (0,0))
+        LISTE.draw(screen)
+        screen.blit(o.image, o.pos)
+        piece = pygame.image.load('image/piece.png')
+        piece = pygame.transform.scale(piece, (20, 20))
+        smallText = pygame.font.Font("freesansbold.ttf",15)
+        nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+        screen.blit(piece,(0,5))
+        screen.blit(nbpiece,(20,10))
+        scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+        screen.blit(scA,(870,35))
+        screen.blit(timer(horloge),(870,10))
+
+
 def gestioncollDroite(listes,o):
     coll = False
     for bloc in listes:
@@ -41,16 +82,27 @@ def gestioncollDroite(listes,o):
         copyJ.x+=o.speed
         if collision(copyJ,bloc.rect):
             coll=True
+            collipicanimal(LISTE, o, listetab, screen, bloc)
             if bloc.type == 8:
                 for i in range(100):
                     o.pos.x -=0.1
                     screen.blit(listetab[numtab].background , (0,0))
                     LISTE.draw(screen)
                     screen.blit(o.image, o.pos)
+                    piece = pygame.image.load('image/piece.png')
+                    piece = pygame.transform.scale(piece, (20, 20))
+                    smallText = pygame.font.Font("freesansbold.ttf",15)
+                    nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+                    screen.blit(piece,(0,5))
+                    screen.blit(nbpiece,(20,10))
+                    scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+                    screen.blit(scA,(870,35))
+                    screen.blit(timer(horloge),(870,10))
                     pygame.display.flip()
                     pygame.time.delay(5)
             elif bloc.type ==5:
                 o.compteurpiece+=1
+                o.score+=75
                 listesprite.remove(bloc)
     if not coll :
         o.pos.x+=o.speed
@@ -62,16 +114,27 @@ def gestioncollGauche(listes,o):
         copyJ.x-=o.speed
         if collision(copyJ,bloc.rect):
             coll=True
+            collipicanimal(LISTE, o, listetab, screen, bloc)
             if bloc.type == 8:
                 for i in range(100):
                     o.pos.x +=0.1
                     screen.blit(listetab[numtab].background , (0,0))
                     LISTE.draw(screen)
                     screen.blit(o.image, o.pos)
+                    piece = pygame.image.load('image/piece.png')
+                    piece = pygame.transform.scale(piece, (20, 20))
+                    smallText = pygame.font.Font("freesansbold.ttf",15)
+                    nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+                    screen.blit(piece,(0,5))
+                    screen.blit(nbpiece,(20,10))
+                    scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+                    screen.blit(scA,(870,35))
+                    screen.blit(timer(horloge),(870,10))
                     pygame.display.flip()
                     pygame.time.delay(5)
             elif bloc.type ==5:
                 o.compteurpiece+=1
+                o.score+=75
                 listesprite.remove(bloc)
 
     if not coll :
@@ -85,6 +148,7 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
             if verifCollide(o,listesprite) != None:
                 if bloc.type ==5:
                     o.compteurpiece+=1
+                    o.score+=75
                     listesprite.remove(bloc)
             if (o.rect.y+o.rect.height) > (bloc.rect.y+bloc.rect.height):
                 #Tester si bloc.rect.y+bloc.rect.height > | < avec o.rect.y+o.rect.height
@@ -94,21 +158,24 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
                 print(bloc.rect.y+bloc.rect.height)
                 o.pos.y = bloc.rect.y+bloc.rect.height+10
                 coll = True
-
+                collipicanimal(LISTE, o, listetab, screen, bloc)
 
                 while verifCollide(o,listesprite) == None:
 
-
                     k = pygame.key.get_pressed()
                     pygame.event.pump()
-
                     if(k[K_LEFT]):
                         gestioncollGauche(listesprite,o)
+                        LISTE.update()
+                        LISTE.draw(screen)
                     elif(k[K_RIGHT]):
                         gestioncollDroite(listesprite,o)
+                        LISTE.update()
+                        LISTE.draw(screen)
 
                     print('vers le bas')
-
+                    LISTE.update()
+                    LISTE.draw(screen)
                     o.pos.y += a
                     a+=0.4
 
@@ -121,6 +188,15 @@ def collisionbas(listes,o,listetab,numtab,screen,LISTE):
                     screen.blit(listetab[numtab].background , (0,0))
                     LISTE.draw(screen)
                     screen.blit(o.image, o.pos)
+                    piece = pygame.image.load('image/piece.png')
+                    piece = pygame.transform.scale(piece, (20, 20))
+                    smallText = pygame.font.Font("freesansbold.ttf",15)
+                    nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+                    screen.blit(piece,(0,5))
+                    screen.blit(nbpiece,(20,10))
+                    scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+                    screen.blit(scA,(870,35))
+                    screen.blit(timer(horloge),(870,10))
                     pygame.draw.rect(screen,(0,255,0), o.rect)
                     #for item in LISTE:
                         #pygame.draw.rect(screen,(255,0,0), item.rect)
@@ -140,6 +216,7 @@ def collisionchute(listes,o):
         if o.rect.colliderect(bloc.rect):
             if (o.rect.y+o.rect.height) < (bloc.rect.y+bloc.rect.height):
                 coll=True
+                collipicanimal(LISTE, o, listetab, screen, bloc)
                 blocposy=bloc.rect.y
                 bloctailley=bloc.rect.height
                 bloctype=bloc.type
@@ -157,14 +234,27 @@ def gestionTombage(listes,o):
         copyJ.y+=10
         if collision(copyJ,bloc.rect):
             coll=True
+            collipicanimal(LISTE, o, listetab, screen, bloc)
             if verifCollide(o,listesprite) != None:
                 if bloc.type ==5:
                     o.compteurpiece+=1
+                    o.score+=75
                     listesprite.remove(bloc)
     if not coll:
         a=2
-        while verifCollide(o,listesprite) == None:
-
+        test=verifCollide(o,listesprite)
+        if(test==None):
+            boucle=True
+        elif(test.type==5):
+            o.compteurpiece+=1
+            o.scoreE+=75
+            listesprite.remove(bloc)
+            boucle=True
+        else:
+            boucle=False
+        while boucle :
+            LISTE.update()
+            LISTE.draw(screen)
             k = pygame.key.get_pressed()
             pygame.event.pump()
 
@@ -172,6 +262,7 @@ def gestionTombage(listes,o):
                 gestioncollGauche(listesprite,o)
             elif(k[K_RIGHT]):
                 gestioncollDroite(listesprite,o)
+
 
             print('vers le bas')
 
@@ -189,16 +280,36 @@ def gestionTombage(listes,o):
             screen.blit(listetab[numtab].background , (0,0))
             LISTE.draw(screen)
             screen.blit(o.image, o.pos)
+            piece = pygame.image.load('image/piece.png')
+            piece = pygame.transform.scale(piece, (20, 20))
+            smallText = pygame.font.Font("freesansbold.ttf",15)
+            nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+            screen.blit(piece,(0,5))
+            screen.blit(nbpiece,(20,10))
+            scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+            screen.blit(scA,(870,35))
+            screen.blit(timer(horloge),(870,10))
             pygame.draw.rect(screen,(0,255,0), o.rect)
             #for item in LISTE:
                 #pygame.draw.rect(screen,(255,0,0), item.rect)
             pygame.display.flip()
+            test=verifCollide(o,listesprite)
+            if(test==None):
+                boucle=True
+            elif(test.type==5):
+                o.compteurpiece+=1
+                o.score+=75
+                listesprite.remove(bloc)
+                boucle=True
+            else:
+                boucle=False
 
         x=collisionchute(listesprite,o)
         o.pos.y = x.posy-(o.rect.height+1)
 
 
 GRAVITE = 7.01
+
 
 
 numtab = 0
@@ -208,6 +319,7 @@ perso = pygame.image.load('image/sprite_kangoo0.png').convert_alpha()
 perso = pygame.transform.smoothscale(perso,(50,50))
 listesprite = pygame.sprite.Group()
 o = Personnage(perso)
+
 tab1 = Tableau('fonds/fond_foret.png', 0, 0, o, 25,675,960,990,0,1000)
 tab2 = Tableau('fonds/fond_foret.png', 0, 1, o,  25,675,960,990,0,1000 )
 tab3 = Tableau('fonds/fond_foret.png', 0, 2,  o, 25,505,960,990,0,1000 )
@@ -239,7 +351,18 @@ angle_init = pi/3
 v_x = cos(angle_init)*v_init
 v_y = sin(angle_init)*v_init
 
+piece = pygame.image.load('image/piece.png')
+piece = pygame.transform.scale(piece, (20, 20))
+smallText = pygame.font.Font("freesansbold.ttf",15)
+nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+
+horloge = Horloge(0)
+
+
+
 while 1:
+    LISTE.update()
     k = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type==QUIT:
@@ -250,6 +373,7 @@ while 1:
         v_y = sin(angle_init)*v_init
 
         if event.type == KEYDOWN:
+            LISTE.update()
             if k[K_UP]:
                 k = pygame.key.get_pressed()
                 if(o.peutsauter):
@@ -257,6 +381,7 @@ while 1:
                     pastouchesol=True
                     sauvy=o.pos.y
                     while(pastouchesol):
+                        LISTE.update()
                         o.ya=sauvy
                         k = pygame.key.get_pressed()
                         old_x = o.pos.x
@@ -293,7 +418,7 @@ while 1:
 
                                     print('vers le haut')
 
-                                    if(o.pos.y>yini-100 and daronnealeo):
+                                    if(o.pos.y>yini-200 and daronnealeo):
                                         o.pos.y -= ach
                                         ach+=0.5
                                         print('a')
@@ -310,6 +435,12 @@ while 1:
                                     screen.blit(listetab[numtab].background , (0,0))
                                     LISTE.draw(screen)
                                     screen.blit(o.image, o.pos)
+                                    nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+                                    screen.blit(piece,(0,5))
+                                    screen.blit(nbpiece,(20,10))
+                                    scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+                                    screen.blit(scA,(870,35))
+                                    screen.blit(timer(horloge),(870,10))
                                     pygame.draw.rect(screen,(0,255,0), o.rect)
                                     #for item in LISTE:
                                       #pygame.draw.rect(screen,(255,0,0), item.rect)
@@ -320,6 +451,7 @@ while 1:
                                 if b != None:
                                     if b.type == 5:
                                         o.compteurpiece+=1
+                                        o.score+=75
                                         listesprite.remove(b)
 
                                 o.yr=0
@@ -350,8 +482,6 @@ while 1:
                             o.t=0
                             break
 
-
-
                         if(k[K_LEFT]):
                                 gestioncollGauche(listesprite,o)
                         elif(k[K_RIGHT]):
@@ -361,6 +491,12 @@ while 1:
                         screen.blit(listetab[numtab].background , (0,0))
                         LISTE.draw(screen)
                         screen.blit(o.image, o.pos)
+                        nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
+                        screen.blit(piece,(0,5))
+                        screen.blit(nbpiece,(20,10))
+                        scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+                        screen.blit(scA,(870,35))
+                        screen.blit(timer(horloge),(870,10))
                         pygame.draw.rect(screen,(0,255,0), o.rect)
                         pygame.display.flip()
 
@@ -401,6 +537,7 @@ while 1:
             gestioncollGauche(listesprite,o)
             gestionTombage(listesprite,o)
 
+
     if o.pos.x > 1000:
         o.pos.x = 0
 
@@ -417,12 +554,19 @@ while 1:
         LISTE.empty()
         #LISTE.clear(screen, listetab[numtab].background)
         numtab+=1
+        o.score+=1000+((numtab*100)/2)+numtab*15
         LISTE = Tableau.dessinerTableau(listetab[numtab], screen, listesprite)
         Tableau.initPerso(listetab[numtab], o, screen)
 
+    nbpiece = smallText.render((" x " + str(o.compteurpiece)),1,(210, 210, 210))
     screen.blit(listetab[numtab].background , (0,0))
     LISTE.draw(screen)
     screen.blit(o.image, o.pos)
+    screen.blit(piece,(0,5))
+    screen.blit(nbpiece,(20,10))
+    scA = smallText.render(("Score:"+str(o.score)),1,(210, 210, 210))
+    screen.blit(scA,(870,35))
+    screen.blit(timer(horloge),(870,10))
     pygame.draw.rect(screen,(0,255,0), o.rect)
     #for item in LISTE:
         #pygame.draw.rect(screen,(255,0,0), item.rect)
