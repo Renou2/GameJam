@@ -498,7 +498,7 @@ A14 = [
     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
 ]
 
-listetable = [[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14],[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14]]
+listetable = [[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14],[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14],[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14],[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14],[A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14]]
 class Tableau(pygame.sprite.Group):
 
     def __init__(self, background, niveau, tableau, perso, xdebut, ydebut, xafin, xbfin, yafin, ybfin):
@@ -542,7 +542,7 @@ class Tableau(pygame.sprite.Group):
         imgspikesnc = pygame.image.load('spikes.png')
         imgspikes = pygame.transform.smoothscale(imgspikesnc,(25,25))
         imgpoulpe= pygame.image.load('poulpe.png')
-        imgpiece = pygam.image.load('piece.png')
+        imgpiece = pygame.image.load('piece.png')
         imgpoulpe = pygame.transform.smoothscale(imgpoulpe,(50,50))
         imgpiece = pygame.transform.smoothscale(imgpiece,(25,25))
 
