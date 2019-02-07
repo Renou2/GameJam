@@ -1,0 +1,8 @@
+if bloc.type == 8:
+    for i in range(100):
+        o.pos.x +=0.1
+        pygame.time.delay(5)
+        screen.blit(listetab[numtab].background , (0,0))
+        LISTE.draw(screen)
+        screen.blit(o.image, o.pos)
+        pygame.display.flip()

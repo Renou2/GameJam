@@ -6,18 +6,17 @@ from pygame.locals import *
 def main():
     # Initialisation de la fenêtre d'affichage
     pygame.init()
-    screen = pygame.display.set_mode((630, 300))
-    pygame.display.set_caption('Nom du jeu')
+    screen = pygame.display.set_mode((630, 500), RESIZABLE)
+    pygame.display.set_caption('The Infernal Kangaroo''s Adventure - Crédits')
 
 
     #Panel de button
 
 
-    fond = pygame.image.load('fonds/fond.png').convert()
-    fond = pygame.transform.smoothscale(fond, (630, 300))
-    fond = fond.convert_alpha()
+    fond = pygame.image.load('fonds/fondnuit.jpg').convert_alpha()
+    # fond = pygame.transform.smoothscale(fond, (630, 300))
     screen.blit(fond, (0, 0))
-    pygame.display.update()
+    # pygame.display.update()
 
     # Boucle d'évènements
     while 1:
@@ -26,30 +25,31 @@ def main():
                 return
 
 
-        arial = pygame.font.SysFont("comicsansms.tff",40)
-        arial.set_bold(False)
-        textCred = arial.render("CRÉDITS:",1,(10, 10, 10))
+        smallText = pygame.font.Font("freesansbold.ttf",15)
+        bigText = pygame.font.Font("leadcoat.ttf",30)
+        textCred = bigText.render("Credits:", 1, (204, 122, 0))
 
 
         arial = pygame.font.SysFont("comicsansms.tff",30)
-        credits = arial.render("Le jeu <nomdujeu> a été dévellopé dans le cadre de la gamejam",1,(20, 20, 20))
-        creditsEquipe = arial.render("2019 par l'équipe <noméquipe> composée de : ",1,(20, 20, 20))
-        creditsRens = arial.render("Lienard Renaud:<role> ",1,(20, 20, 20))
-        creditsD = arial.render("Dutto Driss:<role>  ",1,(20, 20, 20))
-        creditsRose = arial.render("Chapelle Rose:<role> ",1,(20, 20, 20))
-        creditsLo = arial.render("Kemplaire Léo:<role> ",1,(20, 20, 20))
-        creditsColin = arial.render("Vinot Colin:<role>" ,1,(20, 20, 20))
+        credits = smallText.render("Le jeu The Infernal Kangaroo's Adventure a été dévelloppé ", 1, (220,220,220))
+        creditsEquipe = smallText.render("dans le cadre de la gamejam 2019 par l'équipe Kangoo", 1, (220,220,220))
+        creditsEquipe2 = smallText.render("Junior composée de : ", 1, (220,220,220))
+        creditsRens = smallText.render("Lienard Renaud:<role> ", 1, (220,220,220))
+        creditsD = smallText.render("Dutto Driss:<role>  ", 1, (220,220,220))
+        creditsRose = smallText.render("Chapelle Rose:<role> ", 1, (220,220,220))
+        creditsLo = smallText.render("Kemplaire Léo:<role> ", 1, (220,220,220))
+        creditsColin = smallText.render("Vinot Colin:<role>", 1, (220,220,220))
 
-
-        fond.blit(textCred, (270,25))
-        fond.blit(credits, (0,80))
-        fond.blit(creditsEquipe, (0,100))
-        fond.blit(creditsRens, (40,120))
-        fond.blit(creditsD, (40,140))
-        fond.blit(creditsRose, (40,160))
-        fond.blit(creditsLo, (40,180))
-        fond.blit(creditsColin, (40,200))
         screen.blit(fond, (0, 0))
+        screen.blit(textCred, (270,70))
+        screen.blit(credits, (80,180))
+        screen.blit(creditsEquipe, (80,200))
+        screen.blit(creditsEquipe2, (80,220))
+        screen.blit(creditsRens, (120,240))
+        screen.blit(creditsD, (120,260))
+        screen.blit(creditsRose, (120,280))
+        screen.blit(creditsLo, (120,300))
+        screen.blit(creditsColin, (120,320))
         pygame.display.flip()
 
 if __name__ == '__main__': main()

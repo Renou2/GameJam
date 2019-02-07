@@ -27,7 +27,7 @@ def main():
     # Initialisation de la fenêtre d'affichage
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption('Nom du jeu')
+    pygame.display.set_caption('The Infernal Kangaroo''s Adventure - ChoixNiveau')
     #Variable compte
     pieces=0
     pointsprog=0
@@ -93,7 +93,6 @@ def main():
 
 
     compte = Compte(pieces ,pointsprog,medaille,skinp,scores,scoreG)
-    compte.afficher()
 
 
     #Panel de button
@@ -135,6 +134,9 @@ def main():
 
     rankG= pygame.image.load('image/medaille.png')
     rankG = pygame.transform.scale(rankG, (60, 60))
+
+    piece = pygame.image.load('image/piece.png')
+    piece = pygame.transform.scale(piece, (60, 60))
 
     # innitialisation des images des médailles
     imgMedOr = pygame.image.load('image/pieceorgrisée.png')
@@ -182,10 +184,10 @@ def main():
 
 
         mouse = pygame.mouse.get_pos()
-        smallText = pygame.font.Font("freesansbold.ttf",25)
+        smallText = pygame.font.Font("freesansbold.ttf",15)
+        bigText = pygame.font.Font("freesansbold.ttf",20)
+        textnomj = bigText.render(nomj,1,(210, 210, 210))
 
-        textnomj = smallText.render(nomj,1,(210, 210, 210))
-        fond.blit(textnomj, (670,270) )
 
 
         #blit des fonds
@@ -315,12 +317,13 @@ def main():
         imgMedArgent = pygame.image.load('image/pieceargentgrisée.png')
 
 
+        nbpiece = smallText.render((" x " + str(compte.pieces)),1,(210, 210, 210))
 
-
-
-        screen.blit(skin,(700,300))
+        screen.blit(textnomj, (660,295))
+        screen.blit(skin,(650,300))
         screen.blit(rankG,(750,0))
-
+        screen.blit(piece, (650,0))
+        screen.blit(nbpiece, (690,30))
 
         pygame.display.flip()
 

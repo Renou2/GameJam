@@ -7,32 +7,35 @@ import os
 def main():
     # Initialisation de la fenêtre d'affichage
     pygame.init()
-    screen = pygame.display.set_mode((400, 300))
-    pygame.display.set_caption('Nom du jeu')
+    screen = pygame.display.set_mode((630, 500))
+    pygame.display.set_caption('The Infernal Kangaroo''s Adventure - Acceuil')
 
-
+    xk =-150
+    yk =350
 
 
     #Panel de button
-    x=150
-    y=80
+    x=260
+    y=150
     largB=100
     hautB=50
 
-    x2=150
-    y2=150
+    y2=220
 
-    y3=220
+    y3=290
 
-    fond = pygame.image.load('fonds/fond.png').convert()
-    fond = pygame.transform.scale(fond, (400, 300))
+    fond = pygame.image.load('fonds/foret.jpg').convert()
+    # fond = pygame.transform.scale(fond, (400, 300))
     fond = fond.convert_alpha()
 
-    bjouer=pygame.draw.rect(fond, (200,200,200),(x,y,largB,hautB))
-    bregle=pygame.draw.rect(fond, (200,200,200),(x2,y2,largB,hautB))
-    bcredit=pygame.draw.rect(fond, (200,200,200),(x2,y3,largB,hautB))
+    bjouer=pygame.draw.rect(screen, (200,200,200),(x,y,largB,hautB))
+    bregle=pygame.draw.rect(screen, (200,200,200),(x,y2,largB,hautB))
+    bcredit=pygame.draw.rect(screen, (200,200,200),(x,y3,largB,hautB))
 
-
+    kangoo = pygame.image.load('image/kangoo0.png').convert_alpha()
+    kangoo2 = pygame.image.load('image/kangoo1.png').convert_alpha()
+    kangoo = pygame.transform.smoothscale(kangoo, (150,150))
+    kangoo2 = pygame.transform.smoothscale(kangoo2, (150,150))
     # Test sur l'os
     if platform == "linux" or platform == "linux2":
         commande="python3"
@@ -73,34 +76,52 @@ def main():
                         commande=savecommande
 
 
+        screen.blit(fond, (0, 0))
+        if 10 < xk < 50 or 200 < xk < 250 or 400<xk<450:
+            screen.blit(kangoo, (xk, yk))
+        else :
+            screen.blit(kangoo2, (xk, yk))
+
+        xk = xk +1
+
+        if xk >650 :
+            xk = -150
+
         mouse = pygame.mouse.get_pos()
         smallText = pygame.font.Font("freesansbold.ttf",20)
 
+        titreText = pygame.font.Font("leadcoat.ttf",50)
+
+        nomJeu1 = titreText.render("The Infernal Kangaroo's",1,(40, 40, 40))
+        nomJeu2 = titreText.render("Adventure",1,(40, 40, 40))
+        screen.blit(nomJeu1, (90, 30))
+        screen.blit(nomJeu2, (200, 80))
+
         if x+largB > mouse[0] > x and y+hautB > mouse[1] > y:
-            bjouer=pygame.draw.rect(fond, (255, 153, 0),(x ,y,largB,hautB))
+            bjouer=pygame.draw.rect(screen, (255, 153, 0),(x ,y,largB,hautB))
         else:
-            bjouer=pygame.draw.rect(fond, (204, 122, 0),(x,y,largB,hautB))
+            bjouer=pygame.draw.rect(screen, (204, 122, 0),(x,y,largB,hautB))
 
         textBJouer = smallText.render("JOUER",1,(40, 40, 40))
-        fond.blit(textBJouer, (x+15,y+15) )
+        screen.blit(textBJouer, (x+15,y+15) )
 
-        if x2+largB > mouse[0] > x2 and y2+hautB > mouse[1] > y2:
-            bregle=pygame.draw.rect(fond, (255, 153, 0),(x2 ,y2,largB,hautB))
+        if x+largB > mouse[0] > x and y2+hautB > mouse[1] > y2:
+            bregle=pygame.draw.rect(screen, (255, 153, 0),(x ,y2,largB,hautB))
         else:
-            bregle=pygame.draw.rect(fond, (204, 122, 0),(x2,y2,largB,hautB))
+            bregle=pygame.draw.rect(screen, (204, 122, 0),(x,y2,largB,hautB))
 
         textBRegle = smallText.render("RÉGLES",1,(40, 40, 40))
-        fond.blit(textBRegle, (x2+10,y2+15) )
+        screen.blit(textBRegle, (x+10,y2+15) )
 
-        if x2+largB > mouse[0] > x2 and y3+hautB > mouse[1] > y3:
-            bcredit=pygame.draw.rect(fond, (255, 153, 0),(x2 ,y3,largB,hautB))
+        if x+largB > mouse[0] > x and y3+hautB > mouse[1] > y3:
+            bcredit=pygame.draw.rect(screen, (255, 153, 0),(x ,y3,largB,hautB))
         else:
-            bcredit=pygame.draw.rect(fond, (204, 122, 0),(x2,y3,largB,hautB))
+            bcredit=pygame.draw.rect(screen, (204, 122, 0),(x,y3,largB,hautB))
 
         textBCred = smallText.render("CRÉDITS",1,(40, 40, 40))
-        fond.blit(textBCred, (x2+7,y3+15) )
+        screen.blit(textBCred, (x+7,y3+15) )
 
-        screen.blit(fond, (0, 0))
         pygame.display.flip()
+        pygame.time.delay(5)
 
 if __name__ == '__main__': main()
